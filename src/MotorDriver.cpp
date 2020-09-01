@@ -1,8 +1,6 @@
 #include <Arduino.h>
+#include <MotorDriver.h>
 
-class MotorDriver {
-    int right;   // Pin to controll right wheel
-    int left;    // Pin to controll left wheel
-public:
-    MotorDriver(int &right, int &left);
+MotorDriver::MotorDriver(int right, int left){
+
 };

@@ -1,4 +1,6 @@
 #include <Arduino.h>
+#include <blink.h>
+
 #define ONBOARD 13
 
 void setup() {
@@ -8,8 +10,5 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  digitalWrite(ONBOARD, LOW);
-  delay(1000);
-  digitalWrite(ONBOARD, HIGH);
-  delay(1000);
+  blinkOnboardLED(ONBOARD);
 }

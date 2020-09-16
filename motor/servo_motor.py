@@ -5,23 +5,6 @@ In this file we will find all the necessary functions and classes to drive the s
 import RPi.GPIO as GPIO
 from time import sleep
 
-ledpin = 12				# PWM pin connected to LED
-GPIO.setwarnings(False)			#disable warnings
-GPIO.setmode(GPIO.BOARD)		#set pin numbering system
-GPIO.setup(ledpin,GPIO.OUT)
-pi_pwm = GPIO.PWM(ledpin,1000)		#create PWM instance with frequency
-pi_pwm.start(0)				#start PWM of required Duty Cycle 
-while True:
-    for duty in range(0,101,1):
-        pi_pwm.ChangeDutyCycle(duty) #provide duty cycle in the range 0-100
-        sleep(0.01)
-    sleep(0.5)
-    
-    for duty in range(100,-1,-1):
-        pi_pwm.ChangeDutyCycle(duty)
-        sleep(0.01)
-    sleep(0.5)
-
 class servo_motor:
 
     '''
@@ -46,14 +29,15 @@ class servo_motor:
         else:
             raise Exception("The orientation of the motor must be 'Left' or 'Right'!")
 
-        self.pwm_instance = GPIO.PWM(pin_out, 50) #Sets a PWM instance with a frequency of 50.
+        self.pwm_instance = GPIO.PWM(pin_out, 50) #Sets a PWM instance with a frequency of 50 => 20ms.
         self.pwm_instance.start(self.stop_percentage) #Sets the start DUTY CYCLE to a ON-DUTY-PERCENT. 7.5% for stop.  
 
         
     def drive_forward(self, speed_percent)
-
+        self.pwm_instance.ChangeDutyCycle(self.__speed_to_duty_percentage(speed_percent, "Forwards"))
 
     def drive_backwards(self, speed_percent)
+        self.pwm_instance.ChangeDutyCycle(self.__speed_to_duty_percentage(speed_percent, "Backwards"))
 
     def stop(self)
         self.pwm_instance.ChangeDutyCycle(self.stop_percentage)
@@ -65,6 +49,12 @@ class servo_motor:
     def shut_down(self)
         self.pwm_instance.stop()
 
-    def __speed_to_duty_percentage(self, percentage)
+    #This function maps the speed percentage from input (0 - 100) to required in duty cycle (5 - 7.5 - 10)
+    def __speed_to_duty_percentage(self, percentage, direction)
+        if direction == "Forwards":
+            return 7.5 + (1/40) * percentage
+        else if direction == "Backwards":
+            return 7.5 - (1/40) * percentage
+        else:
+            raise Exception("This function requires a specified driving direction")
 
-        

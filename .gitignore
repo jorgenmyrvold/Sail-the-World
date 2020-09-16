@@ -1,2 +1,3 @@
 .vscode
 camera/__pycache__
+.DS_Store

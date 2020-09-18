@@ -1,6 +1,7 @@
 import cv2 as cv
 import numpy as np
 import utils
+from time import sleep
 
 def getLaneCurve(img):
     imgThres = utils.thresholding(img)
@@ -8,6 +9,20 @@ def getLaneCurve(img):
     
     return None
 
+
+if __name__ == "__main__":
+    img = cv.imread('camera/demo_map_img.JPG')
+    img = cv.resize(img, (480, 360))
+    
+    getLaneCurve(img)
+    # cv.imshow('Image', img)
+    cv.waitKey(0)
+    
+    cv.destroyAllWindows()
+
+'''
+# Code for testing lane detection with video.
+# Currently not working
 if __name__ == "__main__":
     cap = cv.VideoCapture('video.mp4')
     frame_counter = 0
@@ -21,3 +36,4 @@ if __name__ == "__main__":
         img = cv.resize(img, (480,360))
         getLaneCurve(img)
         cv.imshow('Vid', img)
+'''

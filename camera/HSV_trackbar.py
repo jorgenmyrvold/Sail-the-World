@@ -48,7 +48,7 @@ def read_HSV_trackbar_values():
 
 if __name__ == "__main__":
 
-    cap = cv.VideoCapture(0)
+    cap = cv.VideoCapture('video.avi')
     create_HSV_trackbar_window()
 
     while True:

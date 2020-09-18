@@ -34,4 +34,12 @@ class Camera(object):
         self.camera = cv.destroyAllWindows()
 
 if __name__ == "__main__":
-    pass
+    cap = cv.VideoCapture(0)
+    
+    while True:
+        ret, frame = cap.read()
+        frame = cv.resize(frame, (480,300))
+        cv.imshow('Frame', frame)
+        
+        if cv.waitKey(1) & 0xFF == ord('q'):
+            break

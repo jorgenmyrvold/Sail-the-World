@@ -2,3 +2,4 @@
 # pip install -r requirements.txt
 
 opencv-contrib-python==4.4.0
+apds9960

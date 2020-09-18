@@ -1,7 +1,6 @@
 '''
 This file is for tuning the HSV variables for a video. 
 Under main, choose video source in the camera constructor
-
 '''
 
 import cv2 as cv

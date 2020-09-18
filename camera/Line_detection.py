@@ -1,4 +1,4 @@
-import cv2 as cv2
+import cv2 as cv
 import numpy as np
 import utils
 
@@ -9,7 +9,7 @@ def getLaneCurve(img):
     return None
 
 if __name__ == "__main__":
-    cap = cv.VideoCapture(0)
+    cap = cv.VideoCapture('video.mp4')
     frame_counter = 0
     while True:
         # frame_counter += 1                                      # If a videoclip is used, uncomment
@@ -18,6 +18,6 @@ if __name__ == "__main__":
         #     frame_counter = 0                                   # (hopefully) loop continuously
         
         success, img = cap.read()
-        img = cv2.resize(img, (480,240))
+        img = cv.resize(img, (480,360))
         getLaneCurve(img)
-        cv2.imshow('Vid', img)
+        cv.imshow('Vid', img)

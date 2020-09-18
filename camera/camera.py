@@ -33,3 +33,5 @@ class Camera(object):
         self.camera.release()
         self.camera = cv.destroyAllWindows()
 
+if __name__ == "__main__":
+    pass

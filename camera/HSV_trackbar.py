@@ -47,19 +47,22 @@ def read_HSV_trackbar_values():
 
 
 if __name__ == "__main__":
-    cam = Camera(0)     # input video source in the Camera constructor. Either 0 for webcam og filename for a videofile
+
+    cap = cv.VideoCapture(0)
     create_HSV_trackbar_window()
 
     while True:
-        img, img_comp = cam.capture()
-        img_HSV = cv.cvtColor(img_comp, cv.COLOR_BGR2HSV)
+        ret, frame = cap.read()
+        frame = cv.resize(frame, (480, 360))
         
         upper, lower = read_HSV_trackbar_values()
-        mask = cv.inRange(img_HSV, lower, upper)
-        img_masked = cv.bitwise_and(img_comp, img_comp, mask=mask)
+        mask = cv.inRange(frame, lower, upper)
+        masked_frame = cv.bitwise_and(frame, frame, mask=mask)
         
         mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)            # Converts img to right dimentions to show in stack
-        h_stack_img = np.hstack([img_comp, mask, img_masked])  # Stacks the array in a single window
+        h_stack_img = np.hstack([frame, mask, masked_frame])  # Stacks the array in a single window        
+        img_HSV = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
         
         cv.imshow("Images", h_stack_img)
-        cv.waitKey(1)
+        if cv.waitKey(1) & 0xFF == ord('q'):
+            break

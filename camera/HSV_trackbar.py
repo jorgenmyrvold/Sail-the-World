@@ -48,13 +48,15 @@ def read_HSV_trackbar_values():
 
 if __name__ == "__main__":
 
-    cap = cv.VideoCapture('video.avi')
+    cap = cv.VideoCapture(0)
     create_HSV_trackbar_window()
 
     while True:
         ret, frame = cap.read()
-        frame = cv.resize(frame, (480, 360))
-        
+        if not ret:
+            print("Error: Could not read from camera")
+            break
+
         upper, lower = read_HSV_trackbar_values()
         mask = cv.inRange(frame, lower, upper)
         masked_frame = cv.bitwise_and(frame, frame, mask=mask)

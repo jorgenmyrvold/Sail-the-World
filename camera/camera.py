@@ -38,7 +38,6 @@ if __name__ == "__main__":
     
     while True:
         ret, frame = cap.read()
-        frame = cv.resize(frame, (480,300))
         cv.imshow('Frame', frame)
         
         if cv.waitKey(1) & 0xFF == ord('q'):

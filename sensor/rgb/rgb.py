@@ -23,10 +23,10 @@ class RGB:
         self.oval = -1
 
         #Member variables
-        self.red = self.apds.readRedLight
-        self.blue = self.apds.readBlueLight
-        self.green = self.apds.readGreenLight
-        self.ambient = self.apds.readAmbientLight
+        self.red = self.apds.readRedLight()
+        self.blue = self.apds.readBlueLight()
+        self.green = self.apds.readGreenLight()
+        self.ambient = self.apds.readAmbientLight()
 
     def print_colors(self):
         val = self.apds.readAmbientLight()

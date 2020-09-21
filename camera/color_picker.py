@@ -17,12 +17,12 @@ def create_HSV_trackbar_window():
     '''
     cv.namedWindow("HSV Trackbar")
     cv.resizeWindow("HSV Trackbar", 640, 240)
-    cv.createTrackbar("HUE_min", "HSV", 0, 179, empty)
-    cv.createTrackbar("HUE_max", "HSV", 179, 179, empty)
-    cv.createTrackbar("SAT_min", "HSV", 0, 255, empty)
-    cv.createTrackbar("SAT_max", "HSV", 255, 255, empty)
-    cv.createTrackbar("VAL_min", "HSV", 0, 255, empty)
-    cv.createTrackbar("VAL_max", "HSV", 255, 255, empty)
+    cv.createTrackbar("HUE_min", "HSV Trackbar", 0, 179, empty)
+    cv.createTrackbar("HUE_max", "HSV Trackbar", 179, 179, empty)
+    cv.createTrackbar("SAT_min", "HSV Trackbar", 0, 255, empty)
+    cv.createTrackbar("SAT_max", "HSV Trackbar", 255, 255, empty)
+    cv.createTrackbar("VAL_min", "HSV Trackbar", 0, 255, empty)
+    cv.createTrackbar("VAL_max", "HSV Trackbar", 255, 255, empty)
 
 def read_HSV_trackbar_values():
     '''
@@ -99,8 +99,8 @@ if __name__ == "__main__":
         
         mask_hsv = cv.cvtColor(mask_hsv, cv.COLOR_GRAY2BGR)   # Converts img to right dimentions to show in stack
         mask_hls = cv.cvtColor(mask_hls, cv.COLOR_GRAY2BGR)   # Converts img to right dimentions to show in stack
-        h_stack_hsv = np.hstack([img, mask_hsv, res_hsv])     # Stacks the array in a single window        
-        h_stack_hls = np.hstack([img, mask_hls, res_hls])     # Stacks the array in a single window        
+        h_stack_hsv = np.hstack([hls_img, mask_hsv, res_hsv])     # Stacks the array in a single window        
+        h_stack_hls = np.hstack([hsv_img, mask_hls, res_hls])     # Stacks the array in a single window        
         
         cv.imshow("HSV", h_stack_hsv)
         cv.imshow("HLS", h_stack_hls) 

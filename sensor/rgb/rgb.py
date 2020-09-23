@@ -40,9 +40,9 @@ class RGB:
 if __name__ == "__main__":
     try:
         sensor1 = RGB(1)
-        print("Red light is: {}".format(sensor1.red))
-        print("Green light is: {}".format(sensor1.green))
-        print("Blue light is: {}".format(sensor1.blue))
+        #print("Red light is: {}".format(sensor1.red))
+        #print("Green light is: {}".format(sensor1.green))
+        #print("Blue light is: {}".format(sensor1.blue))
         while True:
             sensor1.print_colors()
             print(sensor1.blue)

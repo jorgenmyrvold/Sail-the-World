@@ -34,7 +34,6 @@ def getLaneCurve(img, avg_len=10, display=2):
     mid_point, img_hist = utils.get_histogram(img_warped, display=True, threshold_percentage=0.3, region=4)
     dir_point, img_hist = utils.get_histogram(img_warped, display=True, threshold_percentage=0.7, region=1)
     curve_raw = dir_point - mid_point
-    # print(curve_raw)
     
     # Average curve to get more stabile results
     curve_list.append(curve_raw)
@@ -42,7 +41,7 @@ def getLaneCurve(img, avg_len=10, display=2):
         curve_list.pop(0)
     curve = int(sum(curve_list)/len(curve_list))
     
-    
+    # Display results.
     if display != 0:
         img_inv_warp = utils.warp_img(img_warped, points, width, height, inverse=True)
         img_inv_warp = cv.cvtColor(img_inv_warp, cv.COLOR_GRAY2BGR)

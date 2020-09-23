@@ -45,7 +45,6 @@ if __name__ == "__main__":
         #print("Blue light is: {}".format(sensor1.blue))
         while True:
             sensor1.print_colors()
-            print(sensor1.blue)
             
     
     finally:

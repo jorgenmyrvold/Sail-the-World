@@ -6,12 +6,12 @@ def thresholding(img):
     Thresholds image and returns a white mask of the area that is white
     '''
     imgHsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
-    lowerWhite = np.array([0, 0, 197])
-    upperWhite = np.array([179, 22, 255])
+    lowerWhite = np.array([0, 0, 166])
+    upperWhite = np.array([179, 83, 255])
     maskWhite = cv.inRange(imgHsv, lowerWhite, upperWhite)
     return maskWhite
     
-def warp_img(img, points, width, height):
+def warp_img(img, points, width, height, inverse=False):
     '''
     Warps image to get correct perspective of the track. 
     Try to keep the area small and close to the bottom where the robot
@@ -19,7 +19,10 @@ def warp_img(img, points, width, height):
     '''
     pts1 = np.float32(points)     # Points from capture
     pts2 = np.float32([[0,0], [width, 0], [0, height], [width, height]])
-    matrix = cv.getPerspectiveTransform(pts1, pts2)
+    if inverse:
+        matrix = cv.getPerspectiveTransform(pts2, pts1)
+    else:
+        matrix = cv.getPerspectiveTransform(pts1, pts2)
     warped_img = cv.warpPerspective(img, matrix, (width, height))
     return warped_img
 
@@ -92,20 +95,44 @@ def get_histogram(img, threshold_percentage=0.3, display=False, region=1):
         return base_point, img_hist
     return base_point
 
-# def stack_images(scale, img_array):
-#     rows = len(img_array)
-#     cols = len(img_array[0])
-#     is_multiple_rows= isinstance(img_array[0], list)
-#     width = img_array[0][0].shape[1]
-#     height = img_array[0][0].shape[0]
+def stackImages(scale,imgArray):
+    '''
+    Function to stack multiple images
+    param: 
+        scale: scale images
+        imgArray: array of images. Dimentions of list becomes dimentions of stacked images
     
-#     if is_multiple_rows:
-#         for x in range(0, rows):
-#             for y in range(0, cols):
-#                 if img_array[x][y].shape[:2] == img_array[0][0].shape[:2]:
-#                     img_array[x][y] = cv.resize(img_array[x][y], (0,0), None, scale, scale)
-#                 else:
-#                     img_aray[x][y] = cv.resize(img_array[x][y], (img_array[0][0].shape[1], img))
+    '''
+    rows = len(imgArray)
+    cols = len(imgArray[0])
+    rowsAvailable = isinstance(imgArray[0], list)
+    width = imgArray[0][0].shape[1]
+    height = imgArray[0][0].shape[0]
+    if rowsAvailable:
+        for x in range ( 0, rows):
+            for y in range(0, cols):
+                if imgArray[x][y].shape[:2] == imgArray[0][0].shape [:2]:
+                    imgArray[x][y] = cv.resize(imgArray[x][y], (0, 0), None, scale, scale)
+                else:
+                    imgArray[x][y] = cv.resize(imgArray[x][y], (imgArray[0][0].shape[1], imgArray[0][0].shape[0]), None, scale, scale)
+                if len(imgArray[x][y].shape) == 2: imgArray[x][y]= cv.cvtColor( imgArray[x][y], cv.COLOR_GRAY2BGR)
+        imageBlank = np.zeros((height, width, 3), np.uint8)
+        hor = [imageBlank]*rows
+        hor_con = [imageBlank]*rows
+        for x in range(0, rows):
+            hor[x] = np.hstack(imgArray[x])
+        ver = np.vstack(hor)
+    else:
+        for x in range(0, rows):
+            if imgArray[x].shape[:2] == imgArray[0].shape[:2]:
+                imgArray[x] = cv.resize(imgArray[x], (0, 0), None, scale, scale)
+            else:
+                imgArray[x] = cv.resize(imgArray[x], (imgArray[0].shape[1], imgArray[0].shape[0]), None,scale, scale)
+            if len(imgArray[x].shape) == 2: imgArray[x] = cv.cvtColor(imgArray[x], cv.COLOR_GRAY2BGR)
+        hor= np.hstack(imgArray)
+        ver = hor
+    return ver
+
 
 if __name__ == "__main__":
     pass

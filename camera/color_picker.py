@@ -5,7 +5,7 @@ Under main, choose video source in the camera constructor
 
 import cv2 as cv
 import numpy as np
-from camera import Camera
+import sys
 
 
 def empty(a):
@@ -82,54 +82,87 @@ def read_HLS_trackbar_values():
 
 # For tuning on image.
 if __name__ == "__main__":
-    img = cv.imread('camera/resources/demo_map_img.JPG')
-    img = cv.resize(img, (480,240))
-    hls_img = cv.cvtColor(img, cv.COLOR_BGR2HLS)
-    hsv_img = cv.cvtColor(img, cv.COLOR_BGR2HSV)
-    create_HLS_trackbar_window()
-    create_HSV_trackbar_window()
+    if len(sys.argv) < 2:
+        cap = cv.VideoCapture(0)
+        create_HLS_trackbar_window()
+        create_HSV_trackbar_window()
+        
+        while True:
+            _, img = cap.read()
+            img = cv.resize(img, (480, 240))
+            img_hls = cv.cvtColor(img, cv.COLOR_BGR2HLS)
+            img_hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
+            
+            upper_hsv, lower_hsv = read_HSV_trackbar_values()
+            upper_hls, lower_hls = read_HLS_trackbar_values()
+            mask_hsv = cv.inRange(img_hsv, lower_hsv, upper_hsv)
+            mask_hls = cv.inRange(img_hls, lower_hls, upper_hls)
+            res_hsv = cv.bitwise_and(img, img, mask=mask_hsv)
+            res_hls = cv.bitwise_and(img, img, mask=mask_hls)
+            
+            mask_hsv = cv.cvtColor(mask_hsv, cv.COLOR_GRAY2BGR)   # Converts img to right dimentions to show in stack
+            mask_hls = cv.cvtColor(mask_hls, cv.COLOR_GRAY2BGR)   # Converts img to right dimentions to show in stack
+            h_stack_hsv = np.hstack([img_hls, mask_hsv, res_hsv])     # Stacks the array in a single window
+            h_stack_hls = np.hstack([img_hsv, mask_hls, res_hls])     # Stacks the array in a single window
+            
+            cv.imshow("HSV", h_stack_hsv)
+            cv.imshow("HLS", h_stack_hls) 
+            if cv.waitKey(1) & 0xFF == ord('q'):
+                break
+            
+        cv.destroyAllWindows()
+        cap.release()
+        
+        
+    elif sys.argv[1] == 'img':
+        img = cv.imread('camera/resources/demo_map_img.JPG')
+        img = cv.resize(img, (480,240))
+        img_hls = cv.cvtColor(img, cv.COLOR_BGR2HLS)
+        img_hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
+        create_HLS_trackbar_window()
+        create_HSV_trackbar_window()
+        
+        while True:
+            upper_hsv, lower_hsv = read_HSV_trackbar_values()
+            upper_hls, lower_hls = read_HLS_trackbar_values()
+            mask_hsv = cv.inRange(img_hsv, lower_hsv, upper_hsv)
+            mask_hls = cv.inRange(img_hls, lower_hls, upper_hls)
+            res_hsv = cv.bitwise_and(img, img, mask=mask_hsv)
+            res_hls = cv.bitwise_and(img, img, mask=mask_hls)
+            
+            mask_hsv = cv.cvtColor(mask_hsv, cv.COLOR_GRAY2BGR)   # Converts img to right dimentions to show in stack
+            mask_hls = cv.cvtColor(mask_hls, cv.COLOR_GRAY2BGR)   # Converts img to right dimentions to show in stack
+            h_stack_hsv = np.hstack([img_hls, mask_hsv, res_hsv])     # Stacks the array in a single window
+            h_stack_hls = np.hstack([img_hsv, mask_hls, res_hls])     # Stacks the array in a single window
+            
+            cv.imshow("HSV", h_stack_hsv)
+            cv.imshow("HLS", h_stack_hls) 
+            if cv.waitKey(1) & 0xFF == ord('q'):
+                break
+            
+        cv.destroyAllWindows()
     
-    while True:
-        upper_hsv, lower_hsv = read_HSV_trackbar_values()
-        upper_hls, lower_hls = read_HLS_trackbar_values()
-        mask_hsv = cv.inRange(hsv_img, lower_hsv, upper_hsv)
-        mask_hls = cv.inRange(hls_img, lower_hls, upper_hls)
-        res_hsv = cv.bitwise_and(img, img, mask=mask_hsv)
-        res_hls = cv.bitwise_and(img, img, mask=mask_hls)
-        
-        mask_hsv = cv.cvtColor(mask_hsv, cv.COLOR_GRAY2BGR)   # Converts img to right dimentions to show in stack
-        mask_hls = cv.cvtColor(mask_hls, cv.COLOR_GRAY2BGR)   # Converts img to right dimentions to show in stack
-        h_stack_hsv = np.hstack([hls_img, mask_hsv, res_hsv])     # Stacks the array in a single window        
-        h_stack_hls = np.hstack([hsv_img, mask_hls, res_hls])     # Stacks the array in a single window        
-        
-        cv.imshow("HSV", h_stack_hsv)
-        cv.imshow("HLS", h_stack_hls) 
-        if cv.waitKey(1) & 0xFF == ord('q'):
-            break
-        
-        
+    elif sys.argv[1] == 'vid':
+        # For tuning on live video. Should be possible with video clip 
+        # as well, but not at the moment
+        cap = cv.VideoCapture(0)
+        create_HSV_trackbar_window()
 
-'''
-# For tuning on live video. Should be possible with video clip 
-# as well, but not at the moment
-if __name__ == "__main__":
-    cap = cv.VideoCapture(0)
-    create_HSV_trackbar_window()
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                print("Error: Could not read from camera")
+                break
 
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            print("Error: Could not read from camera")
-            break
-
-        upper, lower = read_HSV_trackbar_values()
-        mask = cv.inRange(frame, lower, upper)
-        masked_frame = cv.bitwise_and(frame, frame, mask=mask)
+            upper, lower = read_HSV_trackbar_values()
+            mask = cv.inRange(frame, lower, upper)
+            masked_frame = cv.bitwise_and(frame, frame, mask=mask)
+            
+            mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)            # Converts img to right dimentions to show in stack
+            h_stack_img = np.hstack([frame, mask, masked_frame])   # Stacks the array in a single window        
+            
+            cv.imshow("Images", h_stack_img)
+            if cv.waitKey(1) & 0xFF == ord('q'):
+                break
         
-        mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)            # Converts img to right dimentions to show in stack
-        h_stack_img = np.hstack([frame, mask, masked_frame])   # Stacks the array in a single window        
-        
-        cv.imshow("Images", h_stack_img)
-        if cv.waitKey(1) & 0xFF == ord('q'):
-            break
-'''
+        cv.destroyAllWindows()

@@ -6,8 +6,8 @@ def thresholding(img):
     Thresholds image and returns a white mask of the area that is white
     '''
     imgHsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
-    lowerWhite = np.array([0, 0, 166])
-    upperWhite = np.array([179, 83, 255])
+    lowerWhite = np.array([10, 55, 226])
+    upperWhite = np.array([20, 123, 255])
     maskWhite = cv.inRange(imgHsv, lowerWhite, upperWhite)
     return maskWhite
     

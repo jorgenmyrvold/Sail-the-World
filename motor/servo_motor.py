@@ -16,7 +16,8 @@ class ServoMotor:
         Full backwards: 5% duty cycle
 
     '''
-
+    # When you change the speed of a motor. Should the power be increased slowly? Too get a smoth acceleration?
+    # Maybe this should be done in drive file. idk --  Ludvik
     def __init__(self, pin_out, orientation_of_motor):
         self.pin_out = pin_out
         

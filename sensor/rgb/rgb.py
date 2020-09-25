@@ -29,13 +29,13 @@ class RGB:
         self.ambient = self.apds.readAmbientLight()
 
     def print_colors(self):
-        val = self.apds.readAmbientLight()
-        r = self.apds.readRedLight()
-        g = self.apds.readGreenLight()
-        b = self.apds.readBlueLight()
-        if val != self.oval:
-            print("AmbientLight={} (R: {}, G: {}, B: {})".format(val, r, g, b))
-            self.oval = val
+        #val = self.apds.readAmbientLight()
+        #r = self.apds.readRedLight()
+        #g = self.apds.readGreenLight()
+        #b = self.apds.readBlueLight()
+        if self.ambient != self.oval:
+            print("AmbientLight={} (R: {}, G: {}, B: {})".format(self.ambient, self.red, self.green, self.blue))
+            self.oval = self.ambient
 
 if __name__ == "__main__":
     try:

@@ -54,5 +54,5 @@ if __name__ == "__main__":
             colors = color_array()
             print("{}, {}, {}, {}".format(colors(0), colors(1), colors(2), colors(3))
                
-    finally:
-        GPIO.cleanup()
+#    finally:
+#        GPIO.cleanup()

@@ -2,6 +2,7 @@ from apds9960.const import *
 from apds9960 import APDS9960
 import RPi.GPIO as GPIO
 import smbus
+import numpy as np
 from time import sleep
 
 #Class for RGB sensor, APDS9960
@@ -29,23 +30,29 @@ class RGB:
         self.ambient = self.apds.readAmbientLight()
 
     def print_colors(self):
-        #val = self.apds.readAmbientLight()
-        #r = self.apds.readRedLight()
-        #g = self.apds.readGreenLight()
-        #b = self.apds.readBlueLight()
+        a = self.apds.readAmbientLight()
+        r = self.apds.readRedLight()
+        g = self.apds.readGreenLight()
+        b = self.apds.readBlueLight()
         if self.ambient != self.oval:
-            print("AmbientLight={} (R: {}, G: {}, B: {})".format(self.ambient, self.red, self.green, self.blue))
+            print("AmbientLight={} (R: {}, G: {}, B: {})".format(a, r, g, b))
             self.oval = self.ambient
+
+    def color_array(self):
+        #Prints an array containing Ambient, Red, Green and Blue light respectively
+        a = self.apds.readAmbientLight()
+        r = self.apds.readRedLight()
+        g = self.apds.readGreenLight()
+        b = self.apds.readBlueLight()
+        colors = np.array([a, r, g, b])
+        return colors
 
 if __name__ == "__main__":
     try:
         sensor1 = RGB(1)
-        #print("Red light is: {}".format(sensor1.red))
-        #print("Green light is: {}".format(sensor1.green))
-        #print("Blue light is: {}".format(sensor1.blue))
         while True:
-            sensor1.print_colors()
-            
-    
+            colors = color_array()
+            print("{}, {}, {}, {}".format(colors(0), colors(1), colors(2), colors(3))
+               
     finally:
         GPIO.cleanup()

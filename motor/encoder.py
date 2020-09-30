@@ -1,12 +1,11 @@
 """
 This file is just a class definiton for the encoder for practical usage. 
 """
-from GPIO import DigitalInputDevice
-import math
 
 class Encoder:
 
     #Private default variables
+    current_value = 0
     _number_of_holes = 20 #SJEKK AT DETTE STEMMER
     _radius = 20
     '''
@@ -19,15 +18,18 @@ class Encoder:
 
     def __init__(self, pin_in, orientation):
         self.pin_in = pin_in
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(pin_in, GPIO.IN, pull_up_down=GPIO.PUD_UP)  
+        
 
         #Note that in the 'false' variable, it's supposed to say if the pin should be pulled low or high. Figure this out later!
-        self.InputReader = DigitalInputDevice(pin_in, False, True)
+        #self.InputReader = DigitalInputDevice(pin_in, False, True)
 
         #Set initial position
         self.position = self.read_value()
-        self.distance_travelled = 0
+        #self.distance_travelled = 0
 
-        self.step_distance = self._calculate_distance_per_state_change()
+        #self.step_distance = self._calculate_distance_per_state_change()
 
         if(orientation == "Left"):
             self.orientation = "Left"
@@ -35,6 +37,10 @@ class Encoder:
             self.orientation = "Right"
         else:
             raise Exception("The orientation of the motor must be 'Left' or 'Right'!")
+
+    def encoder_callback(channel):
+        current_value = current_value + 1
+        print("cuurent_value = ",current_value)
 
     def read_value(self):
         #KAN VÆRE VI SKAL RETURNERE .IS_ACTIVE() - Tvetydig dokumentasjon

@@ -3,12 +3,11 @@ This file is just a class definiton for the encoder for practical usage.
 """
 Encoderleft_pin = 23
 
-
+import RPi.GPIO as GPIO
 from GPIO import DigitalInputDevice
 import math
 import signal   #muligens overflødig  ----Vurdert slettet              
 import sys
-import RPi.GPIO as GPIO
 from encoder import Encoder
 
 
@@ -74,9 +73,8 @@ if __name__ == "__main__":
             callback=encoder_callback, bouncetime=50)
 
     #test part
-    i == 2
-    while i> 1
+    i = 2
+    while i> 1:
         sleep(500)
         i = i + 1
-    return 0
     

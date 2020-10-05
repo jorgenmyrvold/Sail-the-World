@@ -26,8 +26,8 @@ class RGB:
 
         #Set up LED-light
         GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(22, GPIO.OUT)
-        GPIO.output(22, GPIO.HIGH)
+        GPIO.setup(15, GPIO.OUT)
+        GPIO.output(15, GPIO.HIGH)
 
         #Member variables
         self.red = self.apds.readRedLight()

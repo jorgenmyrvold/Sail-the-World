@@ -54,7 +54,7 @@ class Encoder:
         return True
 
 
-def encoder_callback_test:
+def encoder_callback_test(channel):
     print("Penis")
 
 if __name__ == "__main__":

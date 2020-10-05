@@ -59,7 +59,7 @@ def encoder_callback_test(channel):
 
 if __name__ == "__main__":
     #settup
-    GPIO.setmode(GPIO.BOARD)
+    GPIO.setmode(GPIO.BCM)
     GPIO_LEFT_ENCODER = 23
     #encoder_l = Encoder(GPIO_LEFT_ENCODER)
     #GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 

@@ -56,7 +56,7 @@ class Encoder:
 def encoder_callback_test(channel):
     print("Penis")
 
-GPIO_LEFT_ENCODER = 23
+GPIO_LEFT_ENCODER = 16
 
 if __name__ == "__main__":
     #settup

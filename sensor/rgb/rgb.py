@@ -17,11 +17,17 @@ class RGB:
         def intH(channel):
             print("INTERRUPT")
 
+        #Set up Interrupt-pin
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(7, GPIO.IN)
         GPIO.add_event_detect(7, GPIO.FALLING, callback = intH)
         self.apds.enableLightSensor()
         self.oval = -1
+
+        #Set up LED-light
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(22, GPIO.OUT)
+        GPIO.output(22, GPIO.HIGH)
 
         #Member variables
         self.red = self.apds.readRedLight()
@@ -53,6 +59,7 @@ if __name__ == "__main__":
 		while True:
 			colors = sensor1.color_array()
 			print("{}, {}, {}, {}".format(colors[0], colors[1], colors[2], colors[3]))
+
 
 	finally:
 		GPIO.cleanup()

@@ -8,7 +8,7 @@ import RPi.GPIO as GPIO
 import math
 import signal   #muligens overflødig  ----Vurdert slettet              
 import sys
-from encoder import Encoder
+
 
 
 class Encoder:

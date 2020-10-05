@@ -62,11 +62,11 @@ if __name__ == "__main__":
     GPIO.setmode(GPIO.BCM)
     GPIO_LEFT_ENCODER = 23
     #encoder_l = Encoder(GPIO_LEFT_ENCODER)
-    #GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 
-     #       callback=encoder_callback_test, bouncetime=50)
     GPIO.setup(GPIO_LEFT_ENCODER, GPIO.IN, pull_up_down=GPIO.PUD_UP)  
-    #test part
-    GPIO.wait_for_edge(GPIO_LEFT_ENCODER, GPIO.BOTH)
+    GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 
+            callback=encoder_callback_test, bouncetime=100)
+
+    
     i = 2
     while i> 1:
         time.sleep(0.1)

@@ -64,6 +64,6 @@ if __name__ == "__main__":
     #test part
     i = 2
     while i> 1:
-        sleep(500)
+        time.sleep(500)
         i = i + 1
     

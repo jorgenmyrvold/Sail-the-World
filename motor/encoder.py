@@ -25,27 +25,15 @@ class Encoder:
     #maybe this class should be used to chech if the encoder is pointing at hole or not_hole
     # and then we could count in the drive file?
 
-    def __init__(self, pin_in, orientation):
+    def __init__(self, pin_in):
         self.pin_in = pin_in
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(pin_in, GPIO.IN, pull_up_down=GPIO.PUD_UP)  
         
 
-        #Note that in the 'false' variable, it's supposed to say if the pin should be pulled low or high. Figure this out later!
-        #self.InputReader = DigitalInputDevice(pin_in, False, True)
-
-        #Set initial position
-        self.position = self.read_value()
         #self.distance_travelled = 0
 
         #self.step_distance = self._calculate_distance_per_state_change()
-
-        if(orientation == "Left"):
-            self.orientation = "Left"
-        elif(orientation == "Right"):
-            self.orientation = "Right"
-        else:
-            raise Exception("The orientation of the motor must be 'Left' or 'Right'!")
 
     def encoder_callback(channel):
         current_value = current_value + 1
@@ -68,7 +56,7 @@ class Encoder:
 
 if __name__ == "__main__":
     #settup
-    encoder_l = Encoder(23,"left")
+    encoder_l = Encoder(23)
     GPIO.add_event_detect(BUTTON_GPIO, GPIO.BOTH, 
             callback=encoder_callback, bouncetime=50)
 

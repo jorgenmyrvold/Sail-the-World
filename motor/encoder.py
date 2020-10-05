@@ -1,7 +1,6 @@
 """
 This file is just a class definiton for the encoder for practical usage. 
 """
-Encoderleft_pin = 23
 
 import RPi.GPIO as GPIO
 import time
@@ -57,10 +56,11 @@ class Encoder:
 def encoder_callback_test(channel):
     print("Penis")
 
+GPIO_LEFT_ENCODER = 23
+
 if __name__ == "__main__":
     #settup
     GPIO.setmode(GPIO.BCM)
-    GPIO_LEFT_ENCODER = 23
     #encoder_l = Encoder(GPIO_LEFT_ENCODER)
     GPIO.setup(GPIO_LEFT_ENCODER, GPIO.IN, pull_up_down=GPIO.PUD_UP)  
     GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 

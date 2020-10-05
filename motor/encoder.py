@@ -65,7 +65,7 @@ if __name__ == "__main__":
     #GPIO.setup(GPIO_LEFT_ENCODER, GPIO.IN, pull_up_down=GPIO.PUD_UP)  
     #GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 
     #        callback=encoder_callback_test, bouncetime=100)
-    GPIO.setup(23, GPIO.IN)
+    GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     if GPIO.input(23):           # if port 25 == 1  
         print("Port 23 is 1/GPIO.HIGH/True")  
     else:  

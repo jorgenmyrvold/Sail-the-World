@@ -62,6 +62,7 @@ if __name__ == "__main__":
             callback=encoder_l.encoder_callback, bouncetime=50)
 
     #test part
+   
     i = 2
     while i> 1:
         time.sleep(500)

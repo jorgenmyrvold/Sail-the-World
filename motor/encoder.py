@@ -67,9 +67,9 @@ if __name__ == "__main__":
     #        callback=encoder_callback_test, bouncetime=100)
     GPIO.setup(23, GPIO.IN)
     if GPIO.input(25):           # if port 25 == 1  
-        print "Port 23 is 1/GPIO.HIGH/True"  
+        print ("Port 23 is 1/GPIO.HIGH/True")  
     else:  
-        print "Port 23 is 0/GPIO.LOW/False" 
+        print ("Port 23 is 0/GPIO.LOW/False")
     i = 2
     while i> 1:
         time.sleep(1)

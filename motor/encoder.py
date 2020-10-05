@@ -53,13 +53,17 @@ class Encoder:
         self.distance_travelled = 0
         return True
 
+
+def encoder_callback_test:
+    print("Penis")
+
 if __name__ == "__main__":
     #settup
     GPIO.setmode(GPIO.BOARD)
     GPIO_LEFT_ENCODER = 23
     encoder_l = Encoder(GPIO_LEFT_ENCODER)
     GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 
-            callback=encoder_l.encoder_callback, bouncetime=50)
+            callback=encoder_callback_test, bouncetime=50)
 
     #test part
    

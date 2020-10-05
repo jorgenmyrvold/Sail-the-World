@@ -67,4 +67,5 @@ if __name__ == "__main__":
     while i> 1:
         time.sleep(500)
         i = i + 1
+        print(i)
     

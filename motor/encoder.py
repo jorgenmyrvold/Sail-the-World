@@ -27,7 +27,6 @@ class Encoder:
 
     def __init__(self, pin_in):
         self.pin_in = pin_in
-        GPIO.setmode(GPIO.BOARD)
         GPIO.setup(pin_in, GPIO.IN, pull_up_down=GPIO.PUD_UP)  
         
 
@@ -56,6 +55,7 @@ class Encoder:
 
 if __name__ == "__main__":
     #settup
+    GPIO.setmode(GPIO.BOARD)
     GPIO_LEFT_ENCODER = 23
     encoder_l = Encoder(GPIO_LEFT_ENCODER)
     GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 
@@ -65,7 +65,7 @@ if __name__ == "__main__":
    
     i = 2
     while i> 1:
-        time.sleep(0.01)
+        time.sleep(0.1)
         i = i + 1
         print(i)
     

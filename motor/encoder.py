@@ -59,7 +59,7 @@ if __name__ == "__main__":
     GPIO_LEFT_ENCODER = 23
     encoder_l = Encoder(GPIO_LEFT_ENCODER)
     GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 
-            callback=encoder_callback, bouncetime=50)
+            callback=encoder_l.encoder_callback, bouncetime=50)
 
     #test part
     i = 2

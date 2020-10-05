@@ -4,6 +4,7 @@ import numpy as np
 def thresholding(img, colorspace):
     '''
     Thresholds image and returns a white mask of the area that is white
+<<<<<<< HEAD
     param:
         img: imgage to threshold
         colorspace: HSV as default. HLS implemented, others can be to
@@ -21,6 +22,13 @@ def thresholding(img, colorspace):
         upperWhite = np.array([179, 83, 255])
         maskWhite = cv.inRange(imgHSV, lowerWhite, upperWhite)
     
+=======
+    '''
+    imgHsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
+    lowerWhite = np.array([10, 55, 226])
+    upperWhite = np.array([20, 123, 255])
+    maskWhite = cv.inRange(imgHsv, lowerWhite, upperWhite)
+>>>>>>> 1fb65da2db7f5fa6f78f00e719b8b570a1cc848f
     return maskWhite
     
 def warp_img(img, points, width, height, inverse=False):

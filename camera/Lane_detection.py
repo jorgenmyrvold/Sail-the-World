@@ -8,22 +8,20 @@ curve_list = []
 
 def getLaneCurve(img, avg_len=10, display=2):
     '''
-    Takes images and evaluates input to determine grade of curve. Returns an int
+    Takes images and evaluates input to determine grade of curve. Returns a float on the interval [-1, 1]
     describing how sharp the curve is.
-    
     param:
         img: image to evaluate cuve from
         avg_len: number of the last frames to average to the final output
         display: Choose which images to display. 0: none, 1: result, 2: stack of all images
-        
     return: 
-        curve: int describing sharpness of curve. Negative is left curve, positive is right
+        curve: float on the interval [-1, 1] describing curve. Negative is left curve, positive is right (I think...)
     '''
     img = cv.resize(img, (480, 240))
     img_copy = img.copy()
     img_result = img.copy()
     
-    img_thres = utils.thresholding(img)   # Threshold image. Create usefull mask
+    img_thres = utils.thresholding(img, 'HLS')   # Threshold image. Create usefull mask
     
     height, width, c = img.shape   # Warp image to see the image from right perspective
     points = utils.read_trackbars("Warp bars")
@@ -60,22 +58,17 @@ def getLaneCurve(img, avg_len=10, display=2):
                      (w * x + int(curve // 50), midY + 10), (0, 0, 255), 2)
         
     if display == 2:
-        imgStacked = utils.stackImages(0.7, ([img, img_warped_points, img_warped],
+        imgStacked = utils.stackImages(1.5, ([img, img_warped_points, img_warped],
                                              [img_hist, img_lane_color, img_result]))
         cv.imshow('ImageStack', imgStacked)
     elif display == 1:
         cv.imshow('Resutlt', img_result)
     
-    # if display:
-    #     img_stack = utils.stackImages(0.7, [[img, img_thres, img_warped],
-    #                                         [img_warped_points, img_hist, img]])
-    #     cv.imshow('All images', img_stack)
-        
-    # cv.imshow('Original img', img)
-    # cv.imshow('Thresh img', img_thres)
-    # cv.imshow('Warped img', img_warped)
-    # cv.imshow('Warped points', img_warped_points)
-    # cv.imshow('Histogram and basepoint', img_hist)
+    # Normalization
+    # This part has to be tweeked to get propper values
+    curve = curve/100
+    if curve < -1: curve = -1
+    if curve > 1: curve = 1
     
     return curve
 
@@ -85,7 +78,7 @@ if __name__ == "__main__":
         print('Live video')
         cap = cv.VideoCapture(0)
         
-        initial_trackbar_vals = [104, 118, 56, 240]   # Right turn: [131, 40, 113, 154]. Straight line: [104, 118, 56, 240]
+        initial_trackbar_vals = [104, 118, 56, 240]
         utils.initialize_trackbars("Warp bars", initial_trackbar_vals)
         
         while True:
@@ -124,13 +117,18 @@ if __name__ == "__main__":
     #     cap = cv.VideoCapture('camera/resources/video.mp4')
     #     frame_counter = 0
     #     while True:
-    #         # frame_counter += 1                                      # If a videoclip is used, uncomment
-    #         # if cap.get(cv.CAP_PROP_FRAME_COUNT) == frame_counter:   # this section of code.
-    #         #     cap.set(cv.CAP_PROP_FRAME_COUNT) = 0                # When uncommented the video will
-    #         #     frame_counter = 0                                   # (hopefully) loop continuously
+    #         frame_counter += 1                                      # If a videoclip is used, uncomment
+    #         if cap.get(cv.CAP_PROP_FRAME_COUNT) == frame_counter:   # this section of code.
+    #             cap.set(cv.CAP_PROP_FRAME_COUNT) = 0                # When uncommented the video will
+    #             frame_counter = 0                                   # (hopefully) loop continuously
             
-    #         success, img = cap.read()
-    #         img = cv.resize(img, (480,360))
-    #         getLaneCurve(img)
-    #         cv.imshow('Vid', img)
+    #         ret, img = cap.read(0)
+    #         img = cv.resize(img, (480, 360))
+    #         curve_val = getLaneCurve(img, avg_len=10, display=1)
+    #         print(curve_val)
+            
+    #         if cv.waitKey(1) & 0xFF == ord('q'):
+    #             break
+            
+    #     cv.destroyAllWindows()
     

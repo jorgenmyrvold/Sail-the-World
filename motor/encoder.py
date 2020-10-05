@@ -56,8 +56,9 @@ class Encoder:
 
 if __name__ == "__main__":
     #settup
-    encoder_l = Encoder(23)
-    GPIO.add_event_detect(BUTTON_GPIO, GPIO.BOTH, 
+    GPIO_LEFT_ENCODER = 23
+    encoder_l = Encoder(GPIO_LEFT_ENCODER)
+    GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 
             callback=encoder_callback, bouncetime=50)
 
     #test part

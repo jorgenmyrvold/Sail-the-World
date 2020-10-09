@@ -36,7 +36,7 @@ class Encoder:
 
     def encoder_callback(self, channel):
         self.current_value = self.current_value + 1
-        print("cuurent_value = ",current_value)
+        print("cuurent_value = ",self.current_value)
 
     def read_value(self):
         #KAN VÆRE VI SKAL RETURNERE .IS_ACTIVE() - Tvetydig dokumentasjon

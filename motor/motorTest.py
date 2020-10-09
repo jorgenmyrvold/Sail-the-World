@@ -15,7 +15,7 @@ def test():
     time.sleep(3)
     motor.stop()
     time.sleep(2)
-    motor.turn_backward(20)
+    motor.turn_backward(50)
     time.sleep(3)
     motor.stop()
 

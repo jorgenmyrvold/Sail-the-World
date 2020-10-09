@@ -54,7 +54,7 @@ class Encoder:
 
 
 def encoder_callback_test(channel):
-    print("Penis")
+    print("Tull")
 
 GPIO_LEFT_ENCODER = 23
 
@@ -62,15 +62,15 @@ if __name__ == "__main__":
     #settup
     GPIO.setmode(GPIO.BCM)
     #encoder_l = Encoder(GPIO_LEFT_ENCODER)
-    #GPIO.setup(GPIO_LEFT_ENCODER, GPIO.IN, pull_up_down=GPIO.PUD_UP)  
-    #GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 
-    #        callback=encoder_callback_test, bouncetime=100)
-    GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    if GPIO.input(23):           # if port 25 == 1  
-        print("Port 23 is 1/GPIO.HIGH/True")  
-    else:  
-        print("Port 23 is 0/GPIO.LOW/False")
-    i = 2
+    GPIO.setup(GPIO_LEFT_ENCODER, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  
+    GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 
+            callback=encoder_callback_test, bouncetime=100)
+    ### slettes!!! GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    #if GPIO.input(23):           # if port 25 == 1  
+    #    print("Port 23 is 1/GPIO.HIGH/True")  
+    #else:  
+    #    print("Port 23 is 0/GPIO.LOW/False")
+    #i = 2
     while i> 1:
         time.sleep(1)
         i = i + 1

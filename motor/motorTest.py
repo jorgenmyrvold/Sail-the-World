@@ -1,5 +1,5 @@
 from servo_motor import ServoMotor
-import GPIO
+import RPi.GPIO as GPIO
 import time
 
 def test():

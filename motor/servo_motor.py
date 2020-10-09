@@ -31,7 +31,7 @@ class ServoMotor:
             raise Exception("The orientation of the motor must be 'Left' or 'Right'!")
 
         #Set the pwm high and initial speed 0
-        
+        GPIO.setup(pin_out, GPIO.OUT)
         self.pwm_instance = GPIO.PWM(pin_out, 50) #Sets a PWM instance with a frequency of 50 => 20ms.
         self.pwm_instance.start(self.stop_percentage) #Sets the start DUTY CYCLE to a ON-DUTY-PERCENT. 7.5% for stop.  
         

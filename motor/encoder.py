@@ -34,8 +34,8 @@ class Encoder:
 
         #self.step_distance = self._calculate_distance_per_state_change()
 
-    def encoder_callback(channel):
-        current_value = current_value + 1
+    def encoder_callback(self, channel):
+        self.current_value = self.current_value + 1
         print("cuurent_value = ",current_value)
 
     def read_value(self):

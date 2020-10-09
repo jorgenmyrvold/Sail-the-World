@@ -26,7 +26,7 @@ class Encoder:
 
     def __init__(self, pin_in):
         self.pin_in = pin_in
-        
+        GPIO.setup(pin_in, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         
         
 

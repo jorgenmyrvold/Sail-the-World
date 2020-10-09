@@ -14,8 +14,8 @@ class Encoder:
 
     #Private default variables
     current_value = 0
-    _number_of_holes = 20 #SJEKK AT DETTE STEMMER
-    _radius = 20
+    #_number_of_holes = 20
+    #_radius = 20
     '''
     To get a reading status from the sensor, we can use that 
      * Hole -> false
@@ -26,7 +26,8 @@ class Encoder:
 
     def __init__(self, pin_in):
         self.pin_in = pin_in
-        GPIO.setup(pin_in, GPIO.IN, pull_up_down=GPIO.PUD_UP)  
+        
+        
         
 
         #self.distance_travelled = 0
@@ -52,24 +53,27 @@ class Encoder:
         self.distance_travelled = 0
         return True
 
-
+'''
 def encoder_callback_test(channel):
     print("Tull")
+'''
 
 GPIO_LEFT_ENCODER = 23
 
 if __name__ == "__main__":
     #settup
     GPIO.setmode(GPIO.BCM)
-    #encoder_l = Encoder(GPIO_LEFT_ENCODER)
+    encoder_l = Encoder(GPIO_LEFT_ENCODER)
+    GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 
+            callback=encoder_callback, bouncetime=100)
+    #settup ferdig
+
+
+    '''
     GPIO.setup(GPIO_LEFT_ENCODER, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  
     GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 
             callback=encoder_callback_test, bouncetime=100)
-    ### slettes!!! GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    #if GPIO.input(23):           # if port 25 == 1  
-    #    print("Port 23 is 1/GPIO.HIGH/True")  
-    #else:  
-    #    print("Port 23 is 0/GPIO.LOW/False")
+    '''
     i = 2
     while i> 1:
         time.sleep(1)

@@ -65,7 +65,7 @@ if __name__ == "__main__":
     GPIO.setmode(GPIO.BCM)
     encoder_l = Encoder(GPIO_LEFT_ENCODER)
     GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 
-            callback=encdoer_l.encoder_callback, bouncetime=100)
+            callback=encoder_l.encoder_callback, bouncetime=100)
     #settup ferdig
 
 

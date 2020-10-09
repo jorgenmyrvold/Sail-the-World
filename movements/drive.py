@@ -7,20 +7,20 @@ from servo_motor import ServoMotor
 from encoder import Encoder
 import math
 
-def drive_forward(speed):
-    motor_left = ServoMotor(LEFT_MOTOR_PIN)
-    motor_right = ServoMotor(RIGHT_MOTOR_PIN)
 
 #Dette navnet kan jobbes med
 class DriveControl:
 
-    def _init_(self, left_motor_pin, right_motor_pin, left_encoder_pin, right_encoder_pin):
+    def _init_(self, left_motor_pin, right_motor_pin, left_encoder_pin, right_encoder_pin, wheel_diameter, wheel_space_between):
         self.left_motor = ServoMotor(left_motor_pin, "Left")
         self.right_motor = ServoMotor(right_motor_pin, "Right")
 
         self.left_encoder = Encoder(left_encoder_pin, "Left")
         self.right_encoder = Encoder(right_encoder_pin, "Right")
-    
+
+        self.wheel_diameter = wheel_diameter
+        self.wheel_space_between = wheel_space_between
+
     def drive_forwards(self, speed):
         #her the encoder should be implementet in order to check if both motors have the same speed
         # same power doesent nesesarry mean equal speed
@@ -102,20 +102,26 @@ class DriveControl:
     def drive_forward_until_distance_from_wall(self, distance_from_wall):
         return 0
 
-    def drive_following_lane_curve(self, lane_curve, default_speed = 50):
+    def drive_following_lane_curve(self, camera_value, speed = 50):
+
+        '''
+        I dette tilfellet her baserer vi oss på det som kalles DIFFERENTIAL STEERING.
+        Teknikken baserer seg på å kalkulere en svingradius basert på hastigheten til hvert hjul.
+        Grunnen til at dette bør brukes, er fordi vi gjerne vil at roboten skal justere vinkelen den kjører i
+        basert på den hastigheten den allerede har - fremfor å la et hjul gå helt til null hver gang den skal snu.
+        '''
+        #self.wheel_diameter
+        #self.wheel_space_between
+
         
-        #First we map the value from the lane curve
-        curve_value = map_value_lane_curve(lane_curve)
-        #This value has to represent a distance left or right
 
-        #We need a distance in front we want to reference
-        target_distance = 10 #Find this later on
-
-        #Now we can find the angle using the tangent of the target distance and the curve_value
-        target_angle = curve_value / target_distance
-
-        #Then we need to make the wheels reach the right point by driving in a slight angle
+        return 0
         
+    #Function that maps the value from the camera input to a distance in the 
+    def _map_value_lane_curve(self, camera_value):
+
+        max_camera_value = 50
+        min_camera_value = -50
 
 
         return 0

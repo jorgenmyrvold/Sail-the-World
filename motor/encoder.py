@@ -70,7 +70,7 @@ if __name__ == "__main__":
     #    print("Port 23 is 1/GPIO.HIGH/True")  
     #else:  
     #    print("Port 23 is 0/GPIO.LOW/False")
-    #i = 2
+    i = 2
     while i> 1:
         time.sleep(1)
         i = i + 1

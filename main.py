@@ -58,6 +58,6 @@ if __name__ == "__main__":
         
     elif sys.argv[1] == 'comp':    # Test the complete main
         signal.signal(signal.SIGALRM, raise_flag)
-        signal.alarm(10)
+        signal.alarm(96)   # Terminate main after 96 seconds to raise flag
         
-        show_video()
+        main()

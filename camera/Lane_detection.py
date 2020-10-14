@@ -65,7 +65,7 @@ def getLaneCurve(img, avg_len=10, display=2):
         cv.imshow('Resutlt', img_result)
     
     # Normalization
-    # This part has to be tweeked to get propper values
+    # This part has to be tuned to get propper values
     curve = curve/100
     if curve < -1: curve = -1
     if curve > 1: curve = 1

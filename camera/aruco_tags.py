@@ -22,7 +22,7 @@ def aruco_detect_north_south(img):
 def aruco_print_corner(img):
     marker_corners, marker_IDs, rejected_candidates = cv.aruco.detectMarkers(img, aruco_dict, parameters=aruco_params)
     if marker_corners:
-        print(marker_corners[0][0][0][1])
+        print(marker_corners[0][0])
     else:
         print('No marker found')
 

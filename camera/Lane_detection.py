@@ -50,6 +50,9 @@ def getLaneCurve(img, avg_len=10, display=2):
         img_result = cv.addWeighted(img_result, 1, img_lane_color, 1, 0)
         midY = 450
         cv.putText(img_result, str(curve), (width // 2 - 80, 85), cv.FONT_HERSHEY_COMPLEX, 2, (255, 0, 255), 3)
+        cv.putText(img, 'Original img', (0, 15), cv.FONT_HERSHEY_PLAIN, 1, (255,0,0), 2)
+        cv.putText(img_warped_points, 'warp points', (0, 15), cv.FONT_HERSHEY_PLAIN, 1, (255,0,0), 2)
+
         cv.line(img_result, (width // 2, midY), (width // 2 + (curve * 3), midY), (255, 0, 255), 5)
         cv.line(img_result, ((width // 2 + (curve * 3)), midY - 25), (width // 2 + (curve * 3), midY + 25), (0, 255, 0), 5)
         for x in range(-30, 30):
@@ -58,7 +61,7 @@ def getLaneCurve(img, avg_len=10, display=2):
                      (w * x + int(curve // 50), midY + 10), (0, 0, 255), 2)
         
     if display == 2:
-        imgStacked = utils.stackImages(1.5, ([img, img_warped_points, img_warped],
+        imgStacked = utils.stackImages(0.9, ([img, img_warped_points, img_warped],
                                              [img_hist, img_lane_color, img_result]))
         cv.imshow('ImageStack', imgStacked)
     elif display == 1:

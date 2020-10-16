@@ -6,7 +6,7 @@ import numpy as np
 from camera.camera import *
 from camera.aruco_tags import *
 from tasks.raise_flag import raise_flag
-from tasks.lighthouse import lighthouse
+from tasks.lighthouse import lighthouse_task
 from tasks.wind_sausage import wind_sausage
 
 # PIN ASSIGNMENTS
@@ -57,8 +57,13 @@ def main():
         
 def raise_flag(e, msg):
     print('Raising flag!')
+    raise_flag()
     exit()
-    
+
+def foo():
+    for i in range(99999):
+        print('foo')
+        time.sleep(1)
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:   # Main competition program
@@ -66,6 +71,6 @@ if __name__ == "__main__":
         
     elif sys.argv[1] == 'comp':    # Test the complete main
         signal.signal(signal.SIGALRM, raise_flag)
-        signal.alarm(96)   # Terminate main after 96 seconds to raise flag
+        signal.alarm(5)   # Terminate main after 96 seconds to raise flag
         
-        main()
+        foo()

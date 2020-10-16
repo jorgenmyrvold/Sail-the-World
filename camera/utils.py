@@ -12,13 +12,13 @@ def thresholding(img, colorspace):
     '''
     if colorspace == 'HLS':
         imgHLS = cv.cvtColor(img, cv.COLOR_BGR2HLS)
-        lowerWhite = np.array([0, 0, 105])
-        upperWhite = np.array([179, 89, 255])
+        lowerWhite = np.array([0, 0, 175])
+        upperWhite = np.array([25, 255, 255])
         maskWhite = cv.inRange(imgHLS, lowerWhite, upperWhite)
     else:  # Default uses HSV colorspace if nothing else is specified
         imgHSV = cv.cvtColor(img, cv.COLOR_BGR2HSV)
-        lowerWhite = np.array([0, 0, 166])
-        upperWhite = np.array([179, 83, 255])
+        lowerWhite = np.array([0, 47, 185])
+        upperWhite = np.array([179, 81, 255])
         maskWhite = cv.inRange(imgHSV, lowerWhite, upperWhite)
     
     return maskWhite

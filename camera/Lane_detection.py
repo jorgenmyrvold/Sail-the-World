@@ -4,6 +4,9 @@ import utils
 from time import sleep
 import sys
 
+# raspi camera dims: 640, 480
+# mac camera dims: 1280, 640
+
 curve_list = []
 
 def getLaneCurve(img, avg_len=10, display=2):
@@ -17,14 +20,14 @@ def getLaneCurve(img, avg_len=10, display=2):
     return: 
         curve: float on the interval [-1, 1] describing curve. Negative is left curve, positive is right (I think...)
     '''
-    img = cv.resize(img, (640, 360))
+    # img = cv.resize(img, (640, 360))
     img_copy = img.copy()
     img_result = img.copy()
     
     img_thres = utils.thresholding(img, 'HLS')   # Threshold image. Create usefull mask
     
     height, width, c = img.shape   # Warp image to see the image from right perspective
-    points = utils.read_trackbars("Warp bars", width=640, height=360)
+    points = utils.read_trackbars("Warp bars", width=640, height=480)
     img_warped = utils.warp_img(img, points, width, height)
     img_warped_masked = utils.warp_img(img_thres, points, width, height)
     img_warped_points = utils.draw_points(img_copy, points, color=(0,0,255), size=15)
@@ -86,12 +89,12 @@ if __name__ == "__main__":
         print('Live video')
         cap = cv.VideoCapture(0)
         
-        initial_trackbar_vals = [104, 118, 56, 240]
+        initial_trackbar_vals = [141, 147, 0, 360]
         utils.initialize_trackbars("Warp bars", initial_trackbar_vals, width=640, height=360)
         
         while True:
             ret, img = cap.read(0)
-            img = cv.resize(img, (640, 360))
+            # img = cv.resize(img, (640, 360))
             curve_val = getLaneCurve(img, avg_len=10, display=2)
             print(curve_val)
             

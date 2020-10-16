@@ -89,7 +89,6 @@ if __name__ == "__main__":
         
         while True:
             _, img = cap.read()
-            img = cv.resize(img, (480, 240))
             img_hls = cv.cvtColor(img, cv.COLOR_BGR2HLS)
             img_hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
             

@@ -17,10 +17,10 @@ def test():
     LeftMotor = DCMotor(left_pwm, left_forward, left_backward, 'Left')
     RightMotor = DCMotor(right_pwm, right_forward, right_backward, 'Right')
 
-    testDirections(LeftMotor)
-    testDirections(RightMotor)
-    #testRange(LeftMotor)
-    #testRange(RightMotor)
+    #testDirections(LeftMotor)
+    #testDirections(RightMotor)
+    testRange(LeftMotor)
+    testRange(RightMotor)
 
 def testDirections(motorClass):
     

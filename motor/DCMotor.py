@@ -40,8 +40,8 @@ class DCMotor:
         self.pwm_instance.start(self.stop_percentage) #Sets the start DUTY CYCLE to a ON-DUTY-PERCENT. 7.5% for stop. 
 
         #Set directional pins.
-        GPIO.setup(self.pin1, GPIO.IN)
-        GPIO.setup(self.pin2, GPIO.IN)
+        GPIO.setup(self.pin1, GPIO.OUT)
+        GPIO.setup(self.pin2, GPIO.OUT)
         self.set_direction_forward() #Initial direction forwards
         
         #SPEED TRACKER - A variable that constantly tracks the current speed of the motor
@@ -63,13 +63,13 @@ class DCMotor:
 
     def set_direction_forward(self):
             #Switches the output of the two h-bridge controller pins
-            GPIO.output(self.pin1, 1)
-            GPIO.output(self.pin2, 0)
+            GPIO.output(self.pin1, GPIO.HIGH)
+            GPIO.output(self.pin2, GPIO.LOW)
         
     def set_direction_backward(self):
             #Switches the output of the two h-bridge controller pins
-            GPIO.output(self.pin1, 0)
-            GPIO.output(self.pin2, 1)
+            GPIO.output(self.pin1, GPIO.LOW)
+            GPIO.output(self.pin2, GPIO.HIGH)
 
     #Stops the wheel, but not the program. The duty cycle is still active!
     def stop(self):
@@ -89,8 +89,7 @@ class DCMotor:
     def __speed_to_duty_percentage(self, percentage):
         #Find the factor you have to multiply a percentage with to map perfectly from 100% to full_forward_percent
         print(percentage)
-        factor = float(85.0/100.0)
+        factor = float(self.full_forward)/100.0
         duty_percentage = (self.stop_percentage) + factor * percentage
-        print("factor" + str(factor))
         print(duty_percentage)
         return duty_percentage

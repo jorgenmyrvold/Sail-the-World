@@ -24,22 +24,22 @@ def test():
 
 def testDirections(motorClass):
     
+    motorClass.turn_forward(20)
+    sleep(6)
+    motorClass.stop()
+    sleep(1)
+
+    motorClass.turn_backward(20)
+    sleep(6)
+    motorClass.stop()
+    sleep(1)
+
     motorClass.turn_forward(50)
     sleep(6)
     motorClass.stop()
     sleep(1)
 
     motorClass.turn_backward(50)
-    sleep(6)
-    motorClass.stop()
-    sleep(1)
-
-    motorClass.turn_forward(100)
-    sleep(6)
-    motorClass.stop()
-    sleep(1)
-
-    motorClass.turn_backward(100)
     sleep(6)
     motorClass.stop()
     sleep(1)

@@ -19,8 +19,8 @@ def test():
 
     testDirections(LeftMotor)
     testDirections(RightMotor)
-    testRange(LeftMotor)
-    testRange(RightMotor)
+    #testRange(LeftMotor)
+    #testRange(RightMotor)
 
 def testDirections(motorClass):
     
@@ -35,12 +35,12 @@ def testDirections(motorClass):
     sleep(1)
 
     motorClass.turn_forward(100)
-    sleep(3)
+    sleep(10)
     motorClass.stop()
     sleep(1)
 
     motorClass.turn_backward(100)
-    sleep(3)
+    sleep(10)
     motorClass.stop()
     sleep(1)
 

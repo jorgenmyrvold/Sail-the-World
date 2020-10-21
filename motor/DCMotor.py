@@ -40,8 +40,8 @@ class DCMotor:
         self.pwm_instance.start(self.stop_percentage) #Sets the start DUTY CYCLE to a ON-DUTY-PERCENT. 7.5% for stop. 
 
         #Set directional pins.
-        GPIO.setup(self.pin1, GPIO.OUT) #Pull down the pin when not high
-        GPIO.setup(self.pin2, GPIO.OUT) #Pull down the pin when not high
+        GPIO.setup(self.pin1, GPIO.IN)
+        GPIO.setup(self.pin2, GPIO.IN)
         self.set_direction_forward() #Initial direction forwards
         
         #SPEED TRACKER - A variable that constantly tracks the current speed of the motor

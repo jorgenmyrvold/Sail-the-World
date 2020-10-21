@@ -10,8 +10,8 @@ def test():
     left_pwm = 13
     left_forward = 4
     left_backward = 17
-    right_forward = 27
-    right_backward = 19 
+    right_forward = 22
+    right_backward = 5
     right_pwm = 12
 
     LeftMotor = DCMotor(left_pwm, left_forward, left_backward, 'Left')

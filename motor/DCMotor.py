@@ -89,7 +89,7 @@ class DCMotor:
     def __speed_to_duty_percentage(self, percentage):
         #Find the factor you have to multiply a percentage with to map perfectly from 100% to full_forward_percent
         print(percentage)
-        factor = 85/100
+        factor = float(85/100)
         duty_percentage = (self.stop_percentage) + factor * percentage
         print("factor" + str(factor))
         print(duty_percentage)

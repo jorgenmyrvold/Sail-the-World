@@ -42,7 +42,7 @@ class DCMotor:
         #Set directional pins.
         GPIO.setup(self.pin1, GPIO.OUT)
         GPIO.setup(self.pin2, GPIO.OUT)
-        self.set_direction_forward() #Initial direction forwards
+        self.set_direction_null() #Initial direction forwards
         
         #SPEED TRACKER - A variable that constantly tracks the current speed of the motor
         self.speed = 0
@@ -70,10 +70,15 @@ class DCMotor:
             #Switches the output of the two h-bridge controller pins
             GPIO.output(self.pin1, GPIO.LOW)
             GPIO.output(self.pin2, GPIO.HIGH)
+    
+    def set_direction_null(self):
+        GPIO.output(self.pin1,GPIO.LOW)
+        GPIO.output(self.pin2,GPIO.LOW)
 
     #Stops the wheel, but not the program. The duty cycle is still active!
     def stop(self):
         self.pwm_instance.ChangeDutyCycle(self.stop_percentage)
+        self.set_direction_null()
         self.speed = 0 #Update speed tracker
         print(self.orientation + "motor stopped.")
 

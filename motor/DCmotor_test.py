@@ -44,8 +44,6 @@ def testDirections(motorClass):
     motorClass.stop()
     sleep(1)
 
-    motorClass.shut_down() 
-
 def testRange(motorClass):
 
     motorClass.turn_forward(10)

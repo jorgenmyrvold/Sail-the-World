@@ -7,12 +7,12 @@ GPIO.setmode(GPIO.BCM)
 def test():
 
     #DECIDE PINS
-    left_pwm = 13
-    left_forward = 4
-    left_backward = 17
-    right_forward = 22
-    right_backward = 5
-    right_pwm = 12
+    left_pwm = 12
+    left_forward = 22
+    left_backward = 5
+    right_forward = 4
+    right_backward = 17
+    right_pwm = 13
 
 
 
@@ -28,15 +28,15 @@ def test():
 
 def testings(motorClass_L, motorClass_R):    
     
-    motorClass_R.turn_forward(30)
+    motorClass_R.turn_forward(50)
     sleep(3)
     motorClass_R.stop()
-    motorClass_L.turn_forward(30)
+    motorClass_L.turn_forward(50)
     sleep(3)
     motorClass_L.stop()
 
-    motorClass_L.turn_backward(20)
-    motorClass_R.turn_backward(20)
+    motorClass_L.turn_backward(30)
+    motorClass_R.turn_backward(30)
     sleep(3)
     motorClass_L.shut_down()
     motorClass_R.shut_down()

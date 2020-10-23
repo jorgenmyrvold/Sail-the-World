@@ -20,7 +20,7 @@ def getLaneCurve(img, avg_len=10, display=2):
     return: 
         curve: float on the interval [-1, 1] describing curve. Negative is left curve, positive is right (I think...)
     '''
-    # img = cv.resize(img, (640, 360))
+    img = cv.resize(img, (640, 460))
     img_copy = img.copy()
     img_result = img.copy()
     
@@ -53,7 +53,7 @@ def getLaneCurve(img, avg_len=10, display=2):
         img_lane_color[:] = 0, 255, 0
         img_lane_color = cv.bitwise_and(img_inv_warp_masked, img_lane_color)
         img_result = cv.addWeighted(img_result, 1, img_lane_color, 1, 0)
-        midY = 450
+        midY = int(height/2)
         cv.putText(img_result, str(curve), (width // 2 - 80, 85), cv.FONT_HERSHEY_COMPLEX, 2, (255, 0, 255), 3)
         # cv.putText(img, 'Original img', (0, 15), cv.FONT_HERSHEY_PLAIN, 1, (255,0,0), 2)
         cv.putText(img_warped_points, 'warp points', (0, 15), cv.FONT_HERSHEY_PLAIN, 1, (255,0,0), 2)

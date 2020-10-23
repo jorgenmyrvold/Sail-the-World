@@ -40,13 +40,13 @@ class Encoder:
         self.pin_in = pin_in
         GPIO.setup(pin_in, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.add_event_detect(pin_in, GPIO.BOTH, 
-            callback=encoder_callback_test, bouncetime=100)
+            callback=self.encoder_callback, bouncetime=100)
         
     #interrupt funkjsonen
     def encoder_callback(self, channel):
         self.current_value = self.current_value + 1
         self.distance_travelled = self.current_value/self.number_of_values_per_round*self.round_distance
-        print("cuurent_value = ",self.current_value)
+        print("cuurent_value = ",self.current_value,"Encoder:", self.pin_in)
 
 
     def resetEncoder(self):

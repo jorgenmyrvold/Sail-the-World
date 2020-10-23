@@ -18,9 +18,6 @@ def test():
     right_backward = 17
     right_pwm = 13
 
-    GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 
-            callback=encoder_callback_test, bouncetime=100)
-
 
 
     LeftMotor = DCMotor(left_pwm, left_forward, left_backward, 'Left')
@@ -37,18 +34,19 @@ def testings(motorClass_L, motorClass_R):
     
     motorClass_L.stop()
     motorClass_R.stop()
-    sleep(5)
+    sleep()
+    # sleep(5)
 
-    motorClass_L.turn_forward(30)
-    sleep(3)
-    motorClass_L.stop()
-    sleep(3)
-    motorClass_R.turn_forward(50)
-    sleep(2)
-    motorClass_L.stop()
+    # motorClass_L.turn_forward(30)
+    # sleep(3)
+    # motorClass_L.stop()
+    # sleep(3)
+    # motorClass_R.turn_forward(50)
+    # sleep(2)
+    # motorClass_L.stop()
     
-    motorClass_R.stop()
-    sleep(3)
+    # motorClass_R.stop()
+    # sleep(3)
     motorClass_L.shut_down()
     motorClass_R.shut_down()
 

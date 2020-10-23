@@ -19,7 +19,7 @@ from tasks.wind_sausage import wind_sausage
 # ULTRASONIC_RIGHT_AFT = Pin z
 # ULTRASONIC_LEFT_AFT = Pin w
 
-
+GPIO.setmode(GPIO.BCM)
 
 def main():
     cap = cv.VideoCapture(0)   # Create a cameraobject to capture images

@@ -2,7 +2,6 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 
-
 def raise_flag():
     
     flag_motor_pin = 7
@@ -14,4 +13,5 @@ def raise_flag():
     
 if __name__ == "__main__":
     GPIO.setmode(GPIO.BCM)
+    sleep(2)
     raise_flag()

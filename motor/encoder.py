@@ -40,7 +40,7 @@ class Encoder:
         self.pin_in = pin_in
         GPIO.setup(pin_in, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.add_event_detect(pin_in, GPIO.BOTH, 
-            callback=self.encoder_callback, bouncetime=100)
+            callback=self.encoder_callback, bouncetime=10)
         
     #interrupt funkjsonen
     def encoder_callback(self, channel):

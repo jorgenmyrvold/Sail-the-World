@@ -41,7 +41,7 @@ def testings(motorClass_L, motorClass_R):
     # sleep(3)
     # motorClass_L.stop()
     # sleep(3)
-    motorClass_R.turn_forward(30)
+    motorClass_R.turn_forward(35)
     # sleep(2)
     # motorClass_L.stop()
     

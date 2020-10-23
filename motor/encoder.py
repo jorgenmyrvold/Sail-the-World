@@ -31,7 +31,7 @@ class Encoder:
     #Private default variables
     current_value = 0
     number_of_values_per_round = 40
-    wheel_radius = 20
+    wheel_radius = 3.2
     round_distance = wheel_radius*2*math.pi
     distance_travelled = 0
 

@@ -1,18 +1,25 @@
 from DCMotor import *
 import RPi.GPIO as GPIO
 from time import sleep
+from encoder import * 
 
 GPIO.setmode(GPIO.BCM)
 
 def test():
 
     #DECIDE PINS
+    encoder_left = Encoder(23)
+    
+    encoder_right = Encoder (24)
     left_pwm = 12
     left_forward = 22
     left_backward = 5
     right_forward = 4
     right_backward = 17
     right_pwm = 13
+
+    GPIO.add_event_detect(GPIO_LEFT_ENCODER, GPIO.BOTH, 
+            callback=encoder_callback_test, bouncetime=100)
 
 
 

@@ -4,6 +4,8 @@ import utils
 from time import sleep
 import sys
 
+# Raspi cam dims: 640, 460
+
 curve_list = []
 
 def getLaneCurve(img, avg_len=10, display=2):
@@ -17,20 +19,21 @@ def getLaneCurve(img, avg_len=10, display=2):
     return: 
         curve: float on the interval [-1, 1] describing curve. Negative is left curve, positive is right (I think...)
     '''
-    img = cv.resize(img, (480, 240))
+    #img = cv.resize(img, (480, 240))
     img_copy = img.copy()
     img_result = img.copy()
     
     img_thres = utils.thresholding(img, 'HLS')   # Threshold image. Create usefull mask
     
-    height, width, c = img.shape   # Warp image to see the image from right perspective
+    # Warp image to see the image from right perspective
+    height, width, c = img.shape
     points = utils.read_trackbars("Warp bars")
-    img_warped = utils.warp_img(img_thres, points, width, height)
+    img_thres_warped = utils.warp_img(img_thres, points, width, height)
     img_warped_points = utils.draw_points(img_copy, points, color=(0,0,255), size=15)
     
     # Get raw data about the curve direction
-    mid_point, img_hist = utils.get_histogram(img_warped, display=True, threshold_percentage=0.3, region=4)
-    dir_point, img_hist = utils.get_histogram(img_warped, display=True, threshold_percentage=0.7, region=1)
+    mid_point, _ = utils.get_histogram(img_thres_warped, display=True, threshold_percentage=0.3, region=4)
+    dir_point, img_hist = utils.get_histogram(img_thres_warped, display=True, threshold_percentage=0.7, region=1)
     curve_raw = dir_point - mid_point
     
     # Average curve to get more stabile results
@@ -41,17 +44,21 @@ def getLaneCurve(img, avg_len=10, display=2):
     
     # Display results.
     if display != 0:
-        img_inv_warp = utils.warp_img(img_warped, points, width, height, inverse=True)
+        img_warp = utils.warp_img(img, points, width, height, inverse=False)
+        img_inv_warp = utils.warp_img(img_thres_warped, points, width, height, inverse=True)
         img_inv_warp = cv.cvtColor(img_inv_warp, cv.COLOR_GRAY2BGR)
         img_inv_warp[0:height // 3, 0:width] = 0, 0, 0
         img_lane_color = np.zeros_like(img)
         img_lane_color[:] = 0, 255, 0
         img_lane_color = cv.bitwise_and(img_inv_warp, img_lane_color)
         img_result = cv.addWeighted(img_result, 1, img_lane_color, 1, 0)
-        midY = 450
+        midY = int(height/2)
         cv.putText(img_result, str(curve), (width // 2 - 80, 85), cv.FONT_HERSHEY_COMPLEX, 2, (255, 0, 255), 3)
-        cv.putText(img, 'Original img', (0, 15), cv.FONT_HERSHEY_PLAIN, 1, (255,0,0), 2)
-        cv.putText(img_warped_points, 'warp points', (0, 15), cv.FONT_HERSHEY_PLAIN, 1, (255,0,0), 2)
+        cv.putText(img_warped_points, 'Warp points', (0, 15), cv.FONT_HERSHEY_PLAIN, 1, (255,0,0), 2)
+        cv.putText(img_warp, 'Warped img', (0, 15), cv.FONT_HERSHEY_PLAIN, 1, (255,0,0), 2)
+        cv.putText(img_thres_warped, 'Thres warped img', (0, 15), cv.FONT_HERSHEY_PLAIN, 1, (255,0,0), 2)
+        cv.putText(img_hist, 'Histogram w/ basepoint', (0, 15), cv.FONT_HERSHEY_PLAIN, 1, (255,0,0), 2)
+        cv.putText(img_lane_color, 'Overlay for result', (0, 15), cv.FONT_HERSHEY_PLAIN, 1, (255,0,0), 2)
 
         cv.line(img_result, (width // 2, midY), (width // 2 + (curve * 3), midY), (255, 0, 255), 5)
         cv.line(img_result, ((width // 2 + (curve * 3)), midY - 25), (width // 2 + (curve * 3), midY + 25), (0, 255, 0), 5)
@@ -61,7 +68,7 @@ def getLaneCurve(img, avg_len=10, display=2):
                      (w * x + int(curve // 50), midY + 10), (0, 0, 255), 2)
         
     if display == 2:
-        imgStacked = utils.stackImages(0.9, ([img, img_warped_points, img_warped],
+        imgStacked = utils.stackImages(0.7, ([img_warped_points, img_warp, img_thres_warped],
                                              [img_hist, img_lane_color, img_result]))
         cv.imshow('ImageStack', imgStacked)
     elif display == 1:

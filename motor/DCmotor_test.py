@@ -27,20 +27,16 @@ def test():
 
 
 def testings(motorClass_L, motorClass_R):    
-    motorClass_L.turn_forward(10)
-    motorClass_R.turn_forward(10)
-    sleep(3)
-    motorClass_L.turn_forward(20)
-    motorClass_R.turn_forward(20)
-    sleep(3)
-    motorClass_L.turn_forward(30)
+    
     motorClass_R.turn_forward(30)
     sleep(3)
-    motorClass_L.turn_forward(40)
-    motorClass_R.turn_forward(40)
+    motorClass_R.stop()
+    motorClass_L.turn_forward(30)
     sleep(3)
-    motorClass_L.turn_forward(50)
-    motorClass_R.turn_forward(50)
+    motorClass_L.stop()
+
+    motorClass_L.turn_backward(20)
+    motorClass_R.turn_backward(20)
     sleep(3)
     motorClass_L.shut_down()
     motorClass_R.shut_down()

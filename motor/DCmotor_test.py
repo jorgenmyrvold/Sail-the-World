@@ -28,10 +28,10 @@ def test():
 
 def testings(motorClass_L, motorClass_R):    
     
-    motorClass_R.turn_forward(50)
+    motorClass_R.turn_forward(30)
     sleep(3)
     motorClass_R.stop()
-    motorClass_L.turn_forward(50)
+    motorClass_L.turn_forward(30)
     sleep(3)
     motorClass_L.stop()
 

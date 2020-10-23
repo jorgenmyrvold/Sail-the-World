@@ -1,5 +1,5 @@
 
 
-def raise_flag(east_start):
+def raise_flag():
     
     return None

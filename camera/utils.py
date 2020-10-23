@@ -12,13 +12,13 @@ def thresholding(img, colorspace):
     '''
     if colorspace == 'HLS':
         imgHLS = cv.cvtColor(img, cv.COLOR_BGR2HLS)
-        lowerWhite = np.array([0, 0, 105])
-        upperWhite = np.array([179, 89, 255])
+        lowerWhite = np.array([0, 0, 175])
+        upperWhite = np.array([25, 255, 255])
         maskWhite = cv.inRange(imgHLS, lowerWhite, upperWhite)
     else:  # Default uses HSV colorspace if nothing else is specified
         imgHSV = cv.cvtColor(img, cv.COLOR_BGR2HSV)
-        lowerWhite = np.array([0, 0, 166])
-        upperWhite = np.array([179, 83, 255])
+        lowerWhite = np.array([0, 47, 185])
+        upperWhite = np.array([179, 81, 255])
         maskWhite = cv.inRange(imgHSV, lowerWhite, upperWhite)
     
     return maskWhite
@@ -88,16 +88,15 @@ def get_histogram(img, threshold_percentage=0.3, display=False, region=1):
     
     '''
     if region == 1:
-        hist_values = np.sum(img, axis=0)
+        hist_values = np.sum(img, axis=0)   # array that sums all pixels in height
     else:
         hist_values = np.sum(img[img.shape[0]//region:, :], axis=0)
-    
-    # hist_values = np.sum(img, axis=0)
+        
     max_value = np.max(hist_values)
     min_value = max_value * threshold_percentage
     
-    index_array = np.where(hist_values >= min_value)
-    base_point = int(np.average(index_array))
+    index_array = np.where(hist_values >= min_value)   # array of all indexes above threshold
+    base_point = int(np.average(index_array))          # Midpoint of the indexes above threshold
     
     if display:
         img_hist = np.zeros((img.shape[0], img.shape[1], 3), np.uint8)
@@ -147,4 +146,12 @@ def stackImages(scale,imgArray):
 
 
 if __name__ == "__main__":
-    pass
+    cap = cv.VideoCapture(0)
+    while True:
+        _, img = cap.read()
+        img = cv.resize(img, (640, 360))
+        base_point, img_hist = get_histogram(cv.cvtColor(img, cv.COLOR_BGR2GRAY), display=True)
+        cv.imshow('img', img)
+        cv.imshow('histogram', img_hist)
+        if cv.waitKey(1) & 0xFF == ord('q'):
+            break

@@ -23,7 +23,7 @@ def test():
     #testDirections(RightMotor)
     #testRange(LeftMotor)
     #testRange(RightMotor)
-    testings(LeftMotor,Rightmotor)
+    testings(LeftMotor,RightMotor)
 
 
 def testings(motorClass_L, motorClass_R):    

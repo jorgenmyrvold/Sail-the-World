@@ -51,7 +51,7 @@ class DCMotor:
         self.set_direction_forward()
         duty_cycle = self.__speed_to_duty_percentage(speed_percent)
         self.pwm_instance.ChangeDutyCycle(duty_cycle)
-        print(self.orientation + "motor set to forward. Duty cycle: " + str(duty_cycle))
+        #print(self.orientation + "motor set to forward. Duty cycle: " + str(duty_cycle))
         self.speed = speed_percent #Update speed tracker
 
     def turn_backward(self, speed_percent):
@@ -93,8 +93,8 @@ class DCMotor:
 
     def __speed_to_duty_percentage(self, percentage):
         #Find the factor you have to multiply a percentage with to map perfectly from 100% to full_forward_percent
-        print(percentage)
+        #print(percentage)
         factor = float(self.full_forward)/100.0
         duty_percentage = (self.stop_percentage) + factor * percentage
-        print(duty_percentage)
+        #print(duty_percentage)
         return duty_percentage

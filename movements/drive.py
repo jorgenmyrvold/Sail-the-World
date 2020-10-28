@@ -44,16 +44,19 @@ class DriveControl:
                 if self.left_encoder.current_value > self.right_encoder.current_value:
                     self.left_motor.turn_forward(self.left_motor.speed-self.left_motor.speed*0.2) #Watch out for the speed reduction value
                     print("Slowed down left motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
-                    print("left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
                 else:
                     self.right_motor.turn_forward(self.right_motor.speed-self.right_motor.speed*0.2) #Watch out for the speed reduction value
                     print("Slowed down right motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
+            
+            
+            #Maybe reomve the following else statement and change the code above so it both reduces one motor and increases the other?
             else:
                 self.left_motor.turn_forward(speed)
                 self.right_motor.turn_forward(speed)
 
         self.stop()
-
+        
+        #maye add a smale sleep in case the car rolles a littel bit before it stops?
         return self.left_encoder.distance, self.right_encoder.distance       
 
 

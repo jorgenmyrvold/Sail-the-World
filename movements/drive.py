@@ -6,7 +6,7 @@ motorfunctions we can make complex movement patterns that depend on conditions g
 from motor.DCMotor import *
 from motor.encoder import *
 import math
-from time import sleep()
+from time import sleep
 
 
 #Dette navnet kan jobbes med

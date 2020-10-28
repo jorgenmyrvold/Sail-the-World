@@ -21,6 +21,10 @@ class DriveControl:
         self.wheel_diameter = wheel_diameter
         self.wheel_space_between = wheel_space_between
 
+        self.lane_curve_sensitivity = 0.1 #The change in cameravalue required to change the turning values
+        self.lane_curve_margin = 0.1 #The margin in which the lane curve following goes form straight forward to turn
+        self.last_camera_value = 0
+
     def drive_forwards(self, speed):
         #her the encoder should be implementet in order to check if both motors have the same speed
         # same power doesent nesesarry mean equal speed
@@ -102,20 +106,32 @@ class DriveControl:
     def drive_forward_until_distance_from_wall(self, distance_from_wall):
         return 0
 
-    def drive_following_lane_curve(self, camera_value, speed = 50):
+    #Must be used in a WHILE-LOOP
+    def drive_following_lane_curve(self, camera_value, main_speed = 50):
+        #Negative values imply turn left and positive imply turn right in this case
+        if abs(camera_value) > abs(self.last_camera_value) + abs(self.lane_curve_sensitivity): 
+            if (camera_value < 0 - self.lane_curve_margin):
+                self.left_motor.turn_forward(main_speed*(1-camera_value))
+                self.right_motor.turn_forward(main_speed*camera_value)
+            elif (camera_value > 0 + self.lane_curve_margin):
+                self.right_motor.turn_forward(main_speed*(1-camera_value))
+                self.left_motor.turn_forward(main_speed*camera_value)
+            else:
+                self.right_motor.turn_forward(main_speed)
+                self.left_motor.turn_forward(main_speed)
+        else:
+            if self.right_motor.speed == 0 and self.left_motor.speed == 0:
+                self.right_motor.turn_forward(main_speed)
+                self.left_motor.turn_forward(main_speed)
 
-        '''
-        I dette tilfellet her baserer vi oss på det som kalles DIFFERENTIAL STEERING.
-        Teknikken baserer seg på å kalkulere en svingradius basert på hastigheten til hvert hjul.
-        Grunnen til at dette bør brukes, er fordi vi gjerne vil at roboten skal justere vinkelen den kjører i
-        basert på den hastigheten den allerede har - fremfor å la et hjul gå helt til null hver gang den skal snu.
-        '''
-        #self.wheel_diameter
-        #self.wheel_space_between
-
-        
-
+        self.last_camera_value = camera_value
         return 0
+
+    def turn_degrees(self, degrees):
+        self.left_motor.stop()
+        self.right_motor.stop()
+
+        #Turn such that the encoders make a turndistance equal to what you should expect
         
     #Function that maps the value from the camera input to a distance in the 
     def _map_value_lane_curve(self, camera_value):

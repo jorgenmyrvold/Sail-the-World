@@ -14,7 +14,7 @@ class DifferentialSteering:
         self.LV = 0
         self.RV = 0
         self.CV = (self.RV+self.LV)/2
-        self.radius = 0
+        self.radius = 0 #Radius says something about in which radius the robot will turn
         
         self.sensitivity = 1
 
@@ -35,7 +35,7 @@ class DifferentialSteering:
     def _update_values(self):
         self.CV = (self.RV+self.LV)/2
         self.radius = (self.wheel_space*(self.LV+self.RV))/(2*(self.LV - self.RV))
-        self._update_sensitivity(self)
+        self._update_sensitivity()
 
     #The sensitivity has to be updated based on the velocity. 
     #High velocity -> High sensitivity
@@ -53,3 +53,4 @@ class DifferentialSteering:
         return self.RV
     def get_central_velocity(self):
         return self.CV
+

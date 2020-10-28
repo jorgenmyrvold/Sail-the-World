@@ -3,17 +3,24 @@ Every function for driving in a specific manner will be given in this file. Usin
 motorfunctions we can make complex movement patterns that depend on conditions given by different inputs. 
 '''
 # Speed er i % fra 0 - 100
-from servo_motor import ServoMotor
-from encoder import Encoder
+from motor.DCMotor import *
+from motor.encoder import *
 import math
+from time import sleep
 
 
 #Dette navnet kan jobbes med
 class DriveControl:
 
-    def _init_(self, left_motor_pin, right_motor_pin, left_encoder_pin, right_encoder_pin, wheel_diameter, wheel_space_between):
-        self.left_motor = ServoMotor(left_motor_pin, "Left")
-        self.right_motor = ServoMotor(right_motor_pin, "Right")
+    def __init__(self, left_motor_pin, right_motor_pin, 
+        left_forward_pin, left_backward_pin,
+        right_forward_pin, right_backward_pin,
+        left_encoder_pin, right_encoder_pin, 
+        wheel_diameter, 
+        wheel_space_between):
+
+        self.left_motor = DCMotor(left_motor_pin, left_forward_pin, left_backward_pin, "Left")
+        self.right_motor = DCMotor(right_motor_pin, right_forward_pin, right_backward_pin, "Right")
 
         self.left_encoder = Encoder(left_encoder_pin, "Left")
         self.right_encoder = Encoder(right_encoder_pin, "Right")
@@ -25,42 +32,31 @@ class DriveControl:
         self.lane_curve_margin = 0.1 #The margin in which the lane curve following goes form straight forward to turn
         self.last_camera_value = 0
 
-    def drive_forwards(self, speed):
-        #her the encoder should be implementet in order to check if both motors have the same speed
-        # same power doesent nesesarry mean equal speed
-        # Extra note: maybe the "variable" speed should be changed to "power"?
+    def drive_forward_distance(self, speed, distance):
+        
+        self.left_encoder.resetEncoder()
+        self.right_encoder.resetEncoder()
 
-        self.left_motor.turn_forward(speed)
-        self.right_motor.turn_forward(speed)
-        """
-        psedoukode:
-        Loop       
-        if encoder_left has changed:
-            increase left_distance by 1
-        if encoder_right has changed:
-            increase right_distance by 1
+        while(self.left_encoder.distance < distance and self.right_encoder.distance < distance):
+            sleep(0.2)
+            #Correct errors
+            if abs(self.left_encoder.current_value - self.right_encoder.current_value) > 10:
+                if self.left_encoder.current_value > self.right_encoder.current_value:
+                    self.left_motor.turn_forward(self.left_motor.speed-self.left_motor.speed*0.2) #Watch out for the speed reduction value
+                    print("Slowed down left motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
+                    print("left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
+                else:
+                    self.right_motor.turn_forward(self.right_motor.speed-self.right_motor.speed*0.2) #Watch out for the speed reduction value
+                    print("Slowed down right motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
+            else:
+                self.left_motor.turn_forward(speed)
+                self.right_motor.turn_forward(speed)
 
+        self.stop()
 
-        if   the right distance is more than the left:
-            decrease the speed of the left engine
-        if   the left distance is more than the right:
-            decrease the speed of the left engine
-        Loop
-
-
-        sketching normal code .....
-        if encoder_left has changed:
-            increase left_distance by 1
-        if encoder_right has changed:
-            increase right_distance by 1
+        return self.left_encoder.distance, self.right_encoder.distance       
 
 
-        if   right_distance > left_distance+2----This is a random value:
-            self.right_motor.turn_forward(speed-speed/10)
-        if   left_distance > right_distance+2----This is a random value:
-            self.left_motor.turn_forward(speed-speed/10)   
-
-        """
     def drive_backwards(self, speed):
         self.left_motor.turn_backward(speed)
         self.right_motor.turn_backward(speed)
@@ -73,20 +69,20 @@ class DriveControl:
         self.left_motor.shut_down()
         self.right_motor.shut_down()
 
-    def drive_forward_distance(self, speed, distance):
-        self.resetEncoderDistance()
+    # def drive_forward_distance(self, speed, distance):
+    #     self.resetEncoderDistance()
 
-        self.left_motor.turn_forward(speed)
-        self.right_motor.turn_forward(speed)
+    #     self.left_motor.turn_forward(speed)
+    #     self.right_motor.turn_forward(speed)
 
-        while (self.left_encoder < distance and self.right_encoder < distance):
-            self.left_encoder.read_value()
-            self.right_encoder.read_value()
+    #     while (self.left_encoder < distance and self.right_encoder < distance):
+    #         self.left_encoder.read_value()
+    #         self.right_encoder.read_value()
         
-        self.left_motor.stop()
-        self.right_motor.stop()
+    #     self.left_motor.stop()
+    #     self.right_motor.stop()
 
-        return 0
+    #     return 0
     
     def drive_backward_distance(self, speed, distance):
         self.resetEncoderDistance()

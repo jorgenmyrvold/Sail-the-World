@@ -28,6 +28,7 @@ def main():
 
     #TESTS
     test_drive_forward(drive_control)
+    print("Bye")
 
 
 def test_drive_forward(drive_control):
@@ -39,3 +40,4 @@ def test_drive_forward(drive_control):
 def test_turn(drive_control):
     return 0
                                 
+main()

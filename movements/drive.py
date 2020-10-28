@@ -3,8 +3,8 @@ Every function for driving in a specific manner will be given in this file. Usin
 motorfunctions we can make complex movement patterns that depend on conditions given by different inputs. 
 '''
 # Speed er i % fra 0 - 100
-from ..motor.DCMotor import *
-from ..motor.encoder import *
+from motor.DCMotor import *
+from motor.encoder import *
 import math
 
 
@@ -18,8 +18,8 @@ class DriveControl:
         wheel_diameter, 
         wheel_space_between):
 
-        self.left_motor = DCMotor(left_motor_pin, left_forward_pin, left_backward_pin  "Left")
-        self.right_motor = DCMotor(right_motor_pin, right_forward_pin, right_backward_pin "Right")
+        self.left_motor = DCMotor(left_motor_pin, left_forward_pin, left_backward_pin, "Left")
+        self.right_motor = DCMotor(right_motor_pin, right_forward_pin, right_backward_pin, "Right")
 
         self.left_encoder = Encoder(left_encoder_pin, "Left")
         self.right_encoder = Encoder(right_encoder_pin, "Right")

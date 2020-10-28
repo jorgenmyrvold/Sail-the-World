@@ -22,8 +22,8 @@ class DriveControl:
         self.left_motor = DCMotor(left_motor_pin, left_forward_pin, left_backward_pin, "Left")
         self.right_motor = DCMotor(right_motor_pin, right_forward_pin, right_backward_pin, "Right")
 
-        self.left_encoder = Encoder(left_encoder_pin)
-        self.right_encoder = Encoder(right_encoder_pin)
+        self.left_encoder = Encoder(left_encoder_pin, "Left")
+        self.right_encoder = Encoder(right_encoder_pin, "Right")
 
         self.wheel_diameter = wheel_diameter
         self.wheel_space_between = wheel_space_between

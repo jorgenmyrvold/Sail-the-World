@@ -28,28 +28,36 @@ encoder_left.resetEncoder()   ???
 '''
 class Encoder:
 
-    #Public default variables
-    current_value = 0
-    number_of_values_per_round = 40
-    wheel_radius = 3.2
-    round_distance = wheel_radius*2*math.pi
-    distance = 0
-
-
-    def __init__(self, pin_in):
+    def __init__(self, pin_in, orientation):
         self.pin_in = pin_in
         GPIO.setup(pin_in, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.add_event_detect(pin_in, GPIO.BOTH, 
             callback=self.encoder_callback, bouncetime=10)
+
+        if(orientation == "Left"):
+            self.orientation = "Left"
+        elif(orientation == "Right"):
+            self.orientation = "Right"
+        else:
+            raise Exception("The orientation of the motor must be 'Left' or 'Right'!")
+
+        self.current_value = 0
+        self.number_of_values_per_round = 40
+        self.wheel_radius = 3.2
+        self.round_distance = self.wheel_radius*2*math.pi
+        self.distance = float(0)
         
     #interrupt funkjsonen
     def encoder_callback(self, channel):
         self.current_value = self.current_value + 1
-        self.distance = self.current_value/self.number_of_values_per_round*self.round_distance
-        print("Encoder:", self.pin_in,"cuurent_value = ",self.current_value,"Distance travelled = ",self.distance,)
+        self.distance = float(self.current_value)/float(self.number_of_values_per_round)*self.round_distance
+        #print("Encoder:", self.pin_in,"cuurent_value = ",self.current_value,"Distance travelled = ",self.distance,)
 
 
     def resetEncoder(self):
         self.current_value = 0
         self.distance = 0
         return True
+
+    def print_encoder_values(self):
+        print("Encoder:", self.orientation,"cuurent_value = ",self.current_value,"Distance travelled = ",self.distance)

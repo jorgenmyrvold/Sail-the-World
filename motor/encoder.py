@@ -28,12 +28,12 @@ encoder_left.resetEncoder()   ???
 '''
 class Encoder:
 
-    #Private default variables
+    #Public default variables
     current_value = 0
     number_of_values_per_round = 40
     wheel_radius = 3.2
     round_distance = wheel_radius*2*math.pi
-    distance_travelled = 0
+    distance = 0
 
 
     def __init__(self, pin_in):
@@ -45,11 +45,11 @@ class Encoder:
     #interrupt funkjsonen
     def encoder_callback(self, channel):
         self.current_value = self.current_value + 1
-        self.distance_travelled = self.current_value/self.number_of_values_per_round*self.round_distance
-        print("Encoder:", self.pin_in,"cuurent_value = ",self.current_value,"Distance travelled = ",self.distance_travelled,)
+        self.distance = self.current_value/self.number_of_values_per_round*self.round_distance
+        print("Encoder:", self.pin_in,"cuurent_value = ",self.current_value,"Distance travelled = ",self.distance,)
 
 
     def resetEncoder(self):
         self.current_value = 0
-        self.distance_travelled = 0
+        self.distance = 0
         return True

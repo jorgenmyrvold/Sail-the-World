@@ -69,20 +69,20 @@ class DriveControl:
         self.left_motor.shut_down()
         self.right_motor.shut_down()
 
-    def drive_forward_distance(self, speed, distance):
-        self.resetEncoderDistance()
+    # def drive_forward_distance(self, speed, distance):
+    #     self.resetEncoderDistance()
 
-        self.left_motor.turn_forward(speed)
-        self.right_motor.turn_forward(speed)
+    #     self.left_motor.turn_forward(speed)
+    #     self.right_motor.turn_forward(speed)
 
-        while (self.left_encoder < distance and self.right_encoder < distance):
-            self.left_encoder.read_value()
-            self.right_encoder.read_value()
+    #     while (self.left_encoder < distance and self.right_encoder < distance):
+    #         self.left_encoder.read_value()
+    #         self.right_encoder.read_value()
         
-        self.left_motor.stop()
-        self.right_motor.stop()
+    #     self.left_motor.stop()
+    #     self.right_motor.stop()
 
-        return 0
+    #     return 0
     
     def drive_backward_distance(self, speed, distance):
         self.resetEncoderDistance()

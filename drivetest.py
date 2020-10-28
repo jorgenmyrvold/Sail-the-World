@@ -35,8 +35,8 @@ def main():
 
 def test_drive_forward(drive_control):
 
-    test_distance = 500
-    test_speed = 50
+    test_distance = 20
+    test_speed = 30
     drive_control.drive_forward_distance(test_speed, test_distance)
 
 def test_turn(drive_control):

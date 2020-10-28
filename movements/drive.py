@@ -38,19 +38,24 @@ class DriveControl:
         self.left_encoder.resetEncoder()
         self.right_encoder.resetEncoder()
 
-        self.left_motor.turn_forward(speed)
-        self.right_motor.turn_forward(speed)
+        current_speed = speed
         while(self.left_encoder.distance < distance and self.right_encoder.distance < distance):
             #Correct errors
-            if abs(self.left_encoder.current_value - self.right_encoder.current_value) > 2:
+            if abs(self.left_encoder.current_value - self.right_encoder.current_value) > 10:
                 if self.left_encoder.current_value > self.right_encoder.current_value:
-                    self.left_motor.turn_forward(speed-(0.3)*speed) #Watch out for the speed reduction value
+                    current_speed = current_speed-(0.2)*current_speed
+                    self.left_motor.turn_forward(current_speed) #Watch out for the speed reduction value
                     print("Slowed down left motor")
                     print("left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
                 else:
-                    self.right_motor.turn_forward(speed-(0.3)*speed) #Watch out for the speed reduction value
+                    current_speed = current_speed-(0.2)*current_speed
+                    self.right_motor.turn_forward(current_speed) #Watch out for the speed reduction value
                     print("Slowed down right motor")
                     print("left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
+            else:
+                current_speed = speed
+                self.left_motor.turn_forward(speed)
+                self.right_motor.turn_forward(speed)
 
         self.stop()
 

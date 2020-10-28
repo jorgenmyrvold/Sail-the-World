@@ -6,6 +6,7 @@ motorfunctions we can make complex movement patterns that depend on conditions g
 from motor.DCMotor import *
 from motor.encoder import *
 import math
+from time import sleep()
 
 
 #Dette navnet kan jobbes med
@@ -40,6 +41,7 @@ class DriveControl:
 
         current_speed = speed
         while(self.left_encoder.distance < distance and self.right_encoder.distance < distance):
+            sleep(0.2)
             #Correct errors
             if abs(self.left_encoder.current_value - self.right_encoder.current_value) > 10:
                 if self.left_encoder.current_value > self.right_encoder.current_value:

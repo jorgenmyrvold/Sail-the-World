@@ -31,7 +31,7 @@ class DriveControl:
         self.lane_curve_margin = 0.1 #The margin in which the lane curve following goes form straight forward to turn
         self.last_camera_value = 0
 
-    def drive_forwards_distance(self, speed, distance):
+    def drive_forward_distance(self, speed, distance):
         #her the encoder should be implementet in order to check if both motors have the same speed
         # same power doesent nesesarry mean equal speed
         # Extra note: maybe the "variable" speed should be changed to "power"?

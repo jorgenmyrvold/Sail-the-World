@@ -3,6 +3,8 @@ from movements.drive import *
 from time import sleep
 import RPi.GPIO as GPIO
 
+GPIO.setmode(GPIO.BCM)
+
 def main():
 
     #Pins

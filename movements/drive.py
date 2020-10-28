@@ -11,7 +11,7 @@ import math
 #Dette navnet kan jobbes med
 class DriveControl:
 
-    def _init_(self, left_motor_pin, right_motor_pin, 
+    def __init__(self, left_motor_pin, right_motor_pin, 
         left_forward_pin, left_backward_pin,
         right_forward_pin, right_backward_pin,
         left_encoder_pin, right_encoder_pin, 

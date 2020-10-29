@@ -67,6 +67,7 @@ def detect_line(rgb_sensor):
     while (colors[0] >= amb_value):
         colors = rgb_sensor.color_array()
         print("{}, {}, {}, {}".format(colors[0], colors[1], colors[2], colors[3]))
+    print('Black line detected!')
     return True
         
 if __name__ == "__main__":
@@ -85,6 +86,10 @@ if __name__ == "__main__":
             print('You started West (Blue)')
         else:
             print('You started East (Yellow)')
+
+        
+        #Checking detect_line function
+        #detect_line(sensor1)
 
 
 	finally:

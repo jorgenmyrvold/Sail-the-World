@@ -22,7 +22,7 @@ def main():
     # Determine if we have east or west start
     east_start = starting_east(cap, avg_len=10, display=False)
 
-    is_east = check_east(rgb_sensor)
+    is_west = check_west(rgb_sensor)
 
     #Drive until first line is discovered
     

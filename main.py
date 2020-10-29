@@ -2,6 +2,7 @@ import cv2 as cv
 import numpy as np
 from camera.camera import *
 from camera.aruco_tags import *
+from sensor.rgb.rgb import *
 
 # PIN ASSIGNMENTS
 
@@ -15,9 +16,25 @@ from camera.aruco_tags import *
 
 def main():
     cap = cv.VideoCapture(0)   # Create a cameraobject to capture images
+
+    rgb_sensor = RGB(1)
     
     # Determine if we have east or west start
     east_start = starting_east(cap, avg_len=10, display=False)
+
+    is_east = check_east(rgb_sensor)
+
+    #Drive until first line is discovered
+    
+    ''''
+    Start driving function
+    ''''
+
+    detect_line(rgb_sensor)
+
+    ''''
+    Stop driving function and turn 90 degrees depending on east/west start
+    ''''
     
     # Follow inner line to south wall and Vindpølse
     

@@ -53,6 +53,22 @@ class RGB:
         colors = np.array([a, r, g, b])
         return colors
 
+def check_east(rgb_sensor):
+    #Returns true if the robot starts at the east side of the map (Blue flag)
+    blue_value = 100 #The minimum value of the blue light variable
+    if rgb_sensor.color_array[3] >= blue_value:
+        return True
+    return False
+
+def detect_line(rgb_sensor):
+    #Runs while the line is not detected, returns TRUE when the line is detected
+    amb_value = 100 #The maximum value of the ambient light when the sensor is at black color
+    colors = rgb_sensor.color_array()
+    while (colors[0] >= amb_value):
+        colors = rgb_sensor.color_array()
+        print("{}, {}, {}, {}".format(colors[0], colors[1], colors[2], colors[3]))
+    return True
+        
 if __name__ == "__main__":
 	try:
 		sensor1 = RGB(1)

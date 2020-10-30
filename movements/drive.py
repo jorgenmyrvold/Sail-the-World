@@ -77,7 +77,7 @@ class DriveControl:
         while(self.left_encoder.distance < distance and self.right_encoder.distance < distance):
             sleep(0.2) #sets the resolution of command input frequency
             #Correct errors
-            if abs(self.left_encoder.current_value - self.right_encoder.current_value) > 10:
+            if abs(self.left_encoder.current_value - self.right_encoder.current_value) > 2:
                 if self.left_encoder.current_value > self.right_encoder.current_value:
                     self.left_motor.turn_backward(self.left_motor.speed-self.left_motor.speed*0.2) #Watch out for the speed reduction value
                     print("Slowed down left motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
@@ -85,6 +85,7 @@ class DriveControl:
                     self.right_motor.turn_backward(self.right_motor.speed-self.right_motor.speed*0.2) #Watch out for the speed reduction value
                     print("Slowed down right motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
             
+
             #Maybe reomve the following else statement and change the code above so it both reduces one motor and increases the other?
             else:
                 self.left_motor.turn_backward(speed)

@@ -42,6 +42,7 @@ def test_drive_forward(drive_control):
     drive_control.drive_forward_distance(test_speed, test_distance)
     drive_control.left_encoder.print_encoder_values()
     drive_control.right_encoder.print_encoder_values()
+    sleep(1)
     drive_control.turn_on_the_spot( 180, "CW")
 
 def test_drive_backward(drive_control):

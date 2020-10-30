@@ -50,7 +50,7 @@ class Encoder:
     #interrupt funkjsonen
     def encoder_callback(self, channel):
         self.current_value = self.current_value + 1
-        self.distance = float(self.current_value)/float(self.number_of_values_per_round)*self.round_distance
+        self.distance = float(self.current_value) / float(self.number_of_values_per_round) * self.round_distance
         #print("Encoder:", self.pin_in,"cuurent_value = ",self.current_value,"Distance travelled = ",self.distance,)
 
 

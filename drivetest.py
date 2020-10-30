@@ -31,9 +31,9 @@ def main():
     #TESTS
     #test_drive_forward(drive_control)
     #test_turn_backwards(drive_control)
-    #drive_control.turn_on_the_spot( 180, "CW")
+    drive_control.turn_on_the_spot( 180, "CW")
     #test_drive_backward(drive_control)
-    drive_control.encoder_distance_test(30, 100)
+    #drive_control.encoder_distance_test(30, 100)
 
     print("Bye")
 

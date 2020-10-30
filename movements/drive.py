@@ -120,12 +120,35 @@ class DriveControl:
         self.last_camera_value = camera_value
         return 0
 
-    def turn_degrees(self, degrees):
-        self.left_motor.stop()
-        self.right_motor.stop()
+    def turn_on_the_spot(self, degrees, direction, speed = 30):
 
-        #Turn such that the encoders make a turndistance equal to what you should expect
+        distance = ((self.wheel_space_between * math.pi)/360) * degrees
+    
+        self.left_encoder.resetEncoder()
+        self.right_encoder.resetEncoder()
+        
+        if direction == "CW":
+            self.left_motor.turn_forward(speed)
+            self.right_motor.turn_backward(speed)
+            while (self.left_encoder.distance < distance and self.right_encoder.distance < distance):
+                if self.left_encoder.distance > distance:
+                    self.left_motor.stop
+                if self.right_encoder.distance > distance:
+                    self.left_right.stop
+            self.left_motor.stop
+            self.left_right.stop
 
+        elif direction == "CC":
+            self.right_motor.turn_forward(speed)
+            self.left_motor.turn_backward(speed)
+            while (self.left_encoder.distance < distance and self.right_encoder.distance < distance):
+                if self.left_encoder.distance > distance:
+                    self.left_motor.stop
+                if self.right_encoder.distance > distance:
+                    self.left_right.stop
+            self.left_motor.stop
+            self.left_right.stop
+        
     #Reset the distance travelled variable of the encoders
     def resetEncoderDistance(self):
         self.left_encoder.resetEncoder()
@@ -140,4 +163,5 @@ def drive_forward_until_distance_from_wall(speed, distance_from_wall):
     #Initialize distance sensor
     while distance_from_wall < distanceReading
         
-'''
+''
+    

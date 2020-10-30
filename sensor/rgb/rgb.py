@@ -80,12 +80,12 @@ if __name__ == "__main__":
 			print("{}, {}, {}, {}".format(colors[0], colors[1], colors[2], colors[3]))
 
         #Checking east or west start
-        ''''
-        if check_west(sensor1):
-            print('You started West (Blue)')
-        else:
-            print('You started East (Yellow)')
-        ''''
+
+        #if check_west(sensor1):
+         #   print('You started West (Blue)')
+        #else:
+         #   print('You started East (Yellow)')
+
         
         #Checking detect_line function
         #detect_line(sensor1)

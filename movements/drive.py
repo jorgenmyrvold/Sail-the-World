@@ -33,9 +33,7 @@ class DriveControl:
         self.last_camera_value = 0
 
     def drive_forward_distance(self, speed, distance):
-        
-        self.left_encoder.resetEncoder()
-        self.right_encoder.resetEncoder()
+        self.resetEncoderDistance()
 
         while(self.left_encoder.distance < distance and self.right_encoder.distance < distance):
             sleep(0.2)
@@ -72,35 +70,30 @@ class DriveControl:
         self.left_motor.shut_down()
         self.right_motor.shut_down()
 
-    # def drive_forward_distance(self, speed, distance):
-    #     self.resetEncoderDistance()
-
-    #     self.left_motor.turn_forward(speed)
-    #     self.right_motor.turn_forward(speed)
-
-    #     while (self.left_encoder < distance and self.right_encoder < distance):
-    #         self.left_encoder.read_value()
-    #         self.right_encoder.read_value()
-        
-    #     self.left_motor.stop()
-    #     self.right_motor.stop()
-
-    #     return 0
     
     def drive_backward_distance(self, speed, distance):
         self.resetEncoderDistance()
-        
-        self.left_motor.turn_backward(speed)
-        self.right_motor.turn_backward(speed)
 
-        while (self.left_encoder < distance and self.right_encoder < distance):
-            self.left_encoder.read_value()
-            self.right_encoder.read_value()
-        
-        self.left_motor.stop()
-        self.right_motor.stop()
+        while(self.left_encoder.distance < distance and self.right_encoder.distance < distance):
+            sleep(0.2) #sets the resolution of command input frequency
+            #Correct errors
+            if abs(self.left_encoder.current_value - self.right_encoder.current_value) > 10:
+                if self.left_encoder.current_value > self.right_encoder.current_value:
+                    self.left_motor.turn_backward(self.left_motor.speed-self.left_motor.speed*0.2) #Watch out for the speed reduction value
+                    print("Slowed down left motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
+                else:
+                    self.right_motor.turn_backward(self.right_motor.speed-self.right_motor.speed*0.2) #Watch out for the speed reduction value
+                    print("Slowed down right motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
+            
+            #Maybe reomve the following else statement and change the code above so it both reduces one motor and increases the other?
+            else:
+                self.left_motor.turn_backward(speed)
+                self.right_motor.turn_backward(speed)
 
-        return 0
+        self.stop()
+        
+        #maye add a smale sleep in case the car rolles a littel bit before it stops?
+        return self.left_encoder.distance, self.right_encoder.distance
 
     def drive_forward_until_distance_from_wall(self, distance_from_wall):
         return 0
@@ -131,21 +124,11 @@ class DriveControl:
         self.right_motor.stop()
 
         #Turn such that the encoders make a turndistance equal to what you should expect
-        
-    #Function that maps the value from the camera input to a distance in the 
-    def _map_value_lane_curve(self, camera_value):
-
-        max_camera_value = 50
-        min_camera_value = -50
-
-
-        return 0
 
     #Reset the distance travelled variable of the encoders
     def resetEncoderDistance(self):
-        self.left_encoder.distance_travelled = 0
-        self.right_encoder.distance_travelled = 0
-        return 0
+        self.left_encoder.resetEncoder()
+        self.right_encoder.resetEncoder()
 '''
 #Eksempel
 def drive_forward_until_distance_from_wall(speed, distance_from_wall):

@@ -79,7 +79,6 @@ if __name__ == "__main__":
         while True:
 			colors = sensor1.color_array()
 			print("{}, {}, {}, {}".format(colors[0], colors[1], colors[2], colors[3]))
-        
 
         #Checking east or west start
         ''''

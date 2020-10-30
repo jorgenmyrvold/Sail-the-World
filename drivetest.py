@@ -30,7 +30,7 @@ def main():
 
     #TESTS
     #test_drive_forward(drive_control)
-    test_drive_backward()
+    test_drive_backward(drive_control)
     print("Bye")
 
 

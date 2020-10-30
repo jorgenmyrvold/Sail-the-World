@@ -3,6 +3,7 @@ import time
 import signal
 import cv2 as cv
 import numpy as np
+import RPi.GPIO as GPIO
 from camera.camera import *
 from camera.aruco_tags import *
 from tasks.raise_flag import raise_flag
@@ -36,7 +37,7 @@ def main():
     wind_sausage(east_start)   # Do first task, follow wall to next, do second task
     
     # Follow outer line to north wall
-    follow_line_until_wall()
+    follow_wall_until_line()
     
     # Follow north wall to Værhane
     follow_wall_until_line(east_start, 0)   #follow_wall_until_line(start_pos, num_lines_to_cross)
@@ -73,6 +74,6 @@ if __name__ == "__main__":
         
     elif sys.argv[1] == 'comp':    # Test the complete main
         signal.signal(signal.SIGALRM, raise_flag)
-        signal.alarm(5)   # Terminate main after 96 seconds to raise flag
+        signal.alarm(96)   # Terminate main after 96 seconds to raise flag
         
         foo()

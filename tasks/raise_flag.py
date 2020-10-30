@@ -18,9 +18,9 @@ def raise_flag_servo():
     servo = GPIO.PWM(flag_motor_pin, 50)   # Pin and 50 = 50Hz
     servo.start(0)
     
-    servo.ChangeDutyCycle(2)   # Set to 0 pos
-    time.sleep(2)
-    servo.ChangeDutyCycle(12)  # raise flag
+    servo.ChangeDutyCycle(0)   # Set to 0 pos
+    sleep(2)
+    servo.ChangeDutyCycle(100)  # raise flag
     
     servo.stop()
     GPIO.cleanup()
@@ -29,4 +29,5 @@ def raise_flag_servo():
 
 if __name__ == "__main__":
     GPIO.setmode(GPIO.BCM)
+    # raise_flag()
     raise_flag_servo()

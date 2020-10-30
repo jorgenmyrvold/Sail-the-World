@@ -184,8 +184,8 @@ class DriveControl:
         self.left_encoder.print_encoder_values()
         self.right_encoder.print_encoder_values()
 
-        self.left_motor.turn_forward(speed)
+        self.right_motor.turn_forward(speed)
         sleep(10)
-        self.left_motor.stop()
+        self.right_motor.stop()
         sleep(1)
-        self.left_encoder.print_encoder_values()
+        self.right_encoder.print_encoder_values()

@@ -46,7 +46,7 @@ class DriveControl:
             if abs(self.left_encoder.current_value - self.right_encoder.current_value) > 10:
                 if self.left_encoder.current_value > self.right_encoder.current_value:
                     current_speed = current_speed-(0.2)*current_speed
-                    self.left_motor.turn_forward(current_speed) #Watch out for the speed reduction value
+                    self.left_motor.turn_forward(left_motor.speed = left_motor.speed - left_motor.speed*0.2) #Watch out for the speed reduction value
                     print("Slowed down left motor")
                     print("left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
                 else:

@@ -33,34 +33,30 @@ class DriveControl:
         self.last_camera_value = 0
 
     def drive_forward_distance(self, speed, distance):
-        #her the encoder should be implementet in order to check if both motors have the same speed
-        # same power doesent nesesarry mean equal speed
-        # Extra note: maybe the "variable" speed should be changed to "power"?
+        
         self.left_encoder.resetEncoder()
         self.right_encoder.resetEncoder()
 
-        current_speed = speed
         while(self.left_encoder.distance < distance and self.right_encoder.distance < distance):
             sleep(0.2)
             #Correct errors
             if abs(self.left_encoder.current_value - self.right_encoder.current_value) > 10:
                 if self.left_encoder.current_value > self.right_encoder.current_value:
-                    current_speed = current_speed-(0.2)*current_speed
-                    self.left_motor.turn_forward(left_motor.speed = left_motor.speed - left_motor.speed*0.2) #Watch out for the speed reduction value
-                    print("Slowed down left motor")
-                    print("left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
+                    self.left_motor.turn_forward(self.left_motor.speed-self.left_motor.speed*0.2) #Watch out for the speed reduction value
+                    print("Slowed down left motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
                 else:
-                    current_speed = current_speed-(0.2)*current_speed
-                    self.right_motor.turn_forward(current_speed) #Watch out for the speed reduction value
-                    print("Slowed down right motor")
-                    print("left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
+                    self.right_motor.turn_forward(self.right_motor.speed-self.right_motor.speed*0.2) #Watch out for the speed reduction value
+                    print("Slowed down right motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
+            
+            
+            #Maybe reomve the following else statement and change the code above so it both reduces one motor and increases the other?
             else:
-                current_speed = speed
                 self.left_motor.turn_forward(speed)
                 self.right_motor.turn_forward(speed)
 
         self.stop()
-
+        
+        #maye add a smale sleep in case the car rolles a littel bit before it stops?
         return self.left_encoder.distance, self.right_encoder.distance       
 
 

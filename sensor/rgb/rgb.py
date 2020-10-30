@@ -75,18 +75,19 @@ if __name__ == "__main__":
 		sensor1 = RGB(1)
 		
         #Function for printing color values from the sensor
-        ''''
+        
         while True:
 			colors = sensor1.color_array()
 			print("{}, {}, {}, {}".format(colors[0], colors[1], colors[2], colors[3]))
-        ''''
+        
 
         #Checking east or west start
+        ''''
         if check_west(sensor1):
             print('You started West (Blue)')
         else:
             print('You started East (Yellow)')
-
+        ''''
         
         #Checking detect_line function
         #detect_line(sensor1)

@@ -29,7 +29,8 @@ def main():
                 wheel_diameter, wheel_space_between)
 
     #TESTS
-    test_drive_forward(drive_control)
+    #test_drive_forward(drive_control)
+    test_drive_backward
     print("Bye")
 
 
@@ -39,6 +40,11 @@ def test_drive_forward(drive_control):
     test_speed = 30
     drive_control.drive_forward_distance(test_speed, test_distance)
     drive_control.turn_on_the_spot( 180, "CC")
+
+def test_drive_backward(drive_control):
+    test_distance = 100
+    test_speed = 50
+    drive_control.drive_backward_distance(test_speed, test_distance)
 
 def test_turn(drive_control):
     return 0

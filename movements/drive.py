@@ -120,34 +120,38 @@ class DriveControl:
         self.last_camera_value = camera_value
         return 0
 
-    def turn_on_the_spot(self, degrees, direction, speed = 30):
+    def turn_on_the_spot(self, degrees, direction, speed = 50):
 
         distance = ((self.wheel_space_between * math.pi)/360) * degrees
     
         self.left_encoder.resetEncoder()
         self.right_encoder.resetEncoder()
+        self.left_encoder.print_encoder_values()
+        self.right_encoder.print_encoder_values()
         
         if direction == "CW":
             self.left_motor.turn_forward(speed)
             self.right_motor.turn_backward(speed)
             while (self.left_encoder.distance < distance and self.right_encoder.distance < distance):
                 if self.left_encoder.distance > distance:
-                    self.left_motor.stop
+                    self.left_motor.stop()
                 if self.right_encoder.distance > distance:
-                    self.right_motor.stop
-            self.left_motor.stop
-            self.right_motor.stop
+                    self.right_motor.stop()
+            self.left_encoder.print_encoder_values()
+            self.right_encoder.print_encoder_values()
+            self.left_motor.stop()
+            self.right_motor.stop()
 
         elif direction == "CC":
             self.right_motor.turn_forward(speed)
             self.left_motor.turn_backward(speed)
             while (self.left_encoder.distance < distance and self.right_encoder.distance < distance):
                 if self.left_encoder.distance > distance:
-                    self.left_motor.stop
+                    self.left_motor.stop()
                 if self.right_encoder.distance > distance:
-                    self.right_motor.stop
-            self.left_motor.stop
-            self.right_motor.stop
+                    self.right_motor.stop()
+            self.left_motor.stop()
+            self.right_motor.stop()
         
     #Reset the distance travelled variable of the encoders
     def resetEncoderDistance(self):

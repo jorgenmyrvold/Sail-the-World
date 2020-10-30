@@ -157,3 +157,12 @@ class DriveControl:
     def resetEncoderDistance(self):
         self.left_encoder.resetEncoder()
         self.right_encoder.resetEncoder()
+
+    def motor_test(self, speed):
+        self.right_motor.turn_backward(50)
+        sleep(3)
+        self.right_motor.stop()
+        sleep(1)
+        self.left_motor.turn_backward(50)
+        sleep(3)
+        self.right_motor.stop()

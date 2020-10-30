@@ -58,8 +58,7 @@ def main():
     return 0
 
         
-def raise_flag(e, msg):
-    print('Raising flag!')
+def raise_flag_final(e, msg):
     raise_flag()
     exit()
 
@@ -73,7 +72,7 @@ if __name__ == "__main__":
         main()
         
     elif sys.argv[1] == 'comp':    # Test the complete main
-        signal.signal(signal.SIGALRM, raise_flag)
+        signal.signal(signal.SIGALRM, raise_flag_final)
         signal.alarm(96)   # Terminate main after 96 seconds to raise flag
         
         foo()

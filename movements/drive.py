@@ -134,9 +134,9 @@ class DriveControl:
                 if self.left_encoder.distance > distance:
                     self.left_motor.stop
                 if self.right_encoder.distance > distance:
-                    self.left_right.stop
+                    self.right_motor.stop
             self.left_motor.stop
-            self.left_right.stop
+            self.right_motor.stop
 
         elif direction == "CC":
             self.right_motor.turn_forward(speed)
@@ -145,23 +145,11 @@ class DriveControl:
                 if self.left_encoder.distance > distance:
                     self.left_motor.stop
                 if self.right_encoder.distance > distance:
-                    self.left_right.stop
+                    self.right_motor.stop
             self.left_motor.stop
-            self.left_right.stop
+            self.right_motor.stop
         
     #Reset the distance travelled variable of the encoders
     def resetEncoderDistance(self):
         self.left_encoder.resetEncoder()
         self.right_encoder.resetEncoder()
-'''
-#Eksempel
-def drive_forward_until_distance_from_wall(speed, distance_from_wall):
-    
-    #Initialize motor
-    motor_left = ServoMotor(pin_out, "Left")
-    motor = ServoMotor
-    #Initialize distance sensor
-    while distance_from_wall < distanceReading
-        
-''
-    

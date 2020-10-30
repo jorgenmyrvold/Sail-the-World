@@ -38,7 +38,7 @@ class DriveControl:
         while(self.left_encoder.distance < distance and self.right_encoder.distance < distance):
             sleep(0.2)
             #Correct errors
-            if abs(self.left_encoder.current_value - self.right_encoder.current_value) > 10:
+            if abs(self.left_encoder.current_value - self.right_encoder.current_value) > 2:
                 if self.left_encoder.current_value > self.right_encoder.current_value:
                     self.left_motor.turn_forward(self.left_motor.speed-self.left_motor.speed*0.2) #Watch out for the speed reduction value
                     print("Slowed down left motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
@@ -132,7 +132,7 @@ class DriveControl:
         if direction == "CW":
             self.left_motor.turn_forward(speed)
             self.right_motor.turn_backward(speed)
-            while (self.left_encoder.distance < distance and self.right_encoder.distance < distance):
+            while (self.left_encoder.distance < distance or self.right_encoder.distance < distance):
                 if self.left_encoder.distance > distance:
                     self.left_motor.stop()
                 if self.right_encoder.distance > distance:

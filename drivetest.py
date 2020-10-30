@@ -49,6 +49,9 @@ def test_drive_backward(drive_control):
     test_speed = 50
     drive_control.drive_backward_distance(test_speed, test_distance)
 
+def test_turn_backwards(DriveControl):
+    return 0
+
 def test_turn(drive_control):
     return 0
                                 

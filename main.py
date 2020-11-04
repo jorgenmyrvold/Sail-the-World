@@ -2,6 +2,9 @@ import cv2 as cv
 import numpy as np
 from camera.camera import *
 from camera.aruco_tags import *
+import RPi.GPIO as GPIO
+from time import sleep
+
 
 # PIN ASSIGNMENTS
 
@@ -12,6 +15,7 @@ from camera.aruco_tags import *
 # ULTRASONIC_RIGHT_AFT = Pin z
 # ULTRASONIC_LEFT_AFT = Pin w
 
+GPIO.setmode(GPIO.BCM)
 
 def main():
     cap = cv.VideoCapture(0)   # Create a cameraobject to capture images

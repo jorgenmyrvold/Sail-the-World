@@ -12,11 +12,12 @@ class Ultrasonic:
         self.sensor = DistanceSensor(board_to_bcm[e], board_to_bcm[t])
     
     def get_distance(self):
+        #returns distance in cm
         return self.sensor.distance
 
 if __name__ == "__main__":
     #sensor = DistanceSensor(echo=18, trigger=1)
-    sensor1 = Ultrasonic(36, 28) #Triggger: GPIO1, Echo: GPIO16
+    ultrasonic_1 = Ultrasonic(36, 28) #Triggger: GPIO1, Echo: GPIO16
     while True:
-        print('Distance: ', sensor1.get_distance)
+        print('Distance: ', ultrasonic_1.get_distance)
         sleep(1)

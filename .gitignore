@@ -2,5 +2,7 @@
 camera/__pycache__
 .DS_Store
 tasks/__pycache__
+motor/__pycache__
+movements/__pycache__
 
 Sail-the-World-Workspace.code-workspace

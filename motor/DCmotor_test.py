@@ -1,12 +1,16 @@
 from DCMotor import *
 import RPi.GPIO as GPIO
 from time import sleep
+from encoder import * 
 
 GPIO.setmode(GPIO.BCM)
 
 def test():
 
     #DECIDE PINS
+    encoder_left = Encoder(23)
+    
+    encoder_right = Encoder (24)
     left_pwm = 12
     left_forward = 22
     left_backward = 5
@@ -30,18 +34,19 @@ def testings(motorClass_L, motorClass_R):
     
     motorClass_L.stop()
     motorClass_R.stop()
-    sleep(5)
+    
+    # sleep(5)
 
     motorClass_L.turn_forward(30)
-    sleep(3)
-    motorClass_L.stop()
-    sleep(3)
-    motorClass_R.turn_forward(50)
-    sleep(2)
-    motorClass_L.stop()
+    # sleep(3)
+    # motorClass_L.stop()
+    # sleep(3)
+    motorClass_R.turn_forward(35)
+    # sleep(2)
+    # motorClass_L.stop()
     
-    motorClass_R.stop()
-    sleep(3)
+    # motorClass_R.stop()
+    sleep(5)
     motorClass_L.shut_down()
     motorClass_R.shut_down()
 

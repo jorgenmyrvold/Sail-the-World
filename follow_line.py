@@ -19,7 +19,10 @@ def follow_line_until_wall(cap, drive_control):
         ret, img = cap.read(0)
         if not ret:
             print("Error reading camera!")
-        curve_val = getLaneCurve(img, avg_len=10, display=2)
+        curve_val = getLaneCurve(img, avg_len=10, display=1)
+        print(curve_val)
+        if cv.waitKey(1) & 0xFF == ord('q'):
+            break
         drive_control.drive_following_lane_curve(curve_val)
     
 
@@ -27,14 +30,15 @@ def follow_line_until_wall(cap, drive_control):
 if __name__ == "__main__":
     
     if len(sys.argv) < 2:
+        
         cap = cv.VideoCapture(0)
         drive_control = DriveControl()
-        ultrasonic_front = DistanceSensor(echo=12, trigger=7)
+        # ultrasonic_front = DistanceSensor(echo=12, trigger=7)
         
         initial_trackbar_vals = [150, 255, 100, 480]   # For warping of image
         initialize_trackbars("Warp bars", initial_trackbar_vals, width=640, height=480)
         
-        follow_line_until_wall(cap, drive_control)
+        follow_line_until_wall(cap)
         
         drive_control.stop()
         cv.destroyAllWindows()

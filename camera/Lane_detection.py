@@ -1,6 +1,7 @@
 import cv2 as cv
 import numpy as np
-import utils
+import camera.utils
+from camera.utils import *
 from time import sleep
 import sys
 
@@ -24,17 +25,17 @@ def getLaneCurve(img, avg_len=10, display=2):
     img_copy = img.copy()
     img_result = img.copy()
     
-    img_thres = utils.thresholding(img, 'HSV')   # Threshold image. Create usefull mask
+    img_thres = thresholding(img, 'HSV')   # Threshold image. Create usefull mask  # utils
     
     height, width, c = img.shape   # Warp image to see the image from right perspective
-    points = utils.read_trackbars("Warp bars", width=width, height=height)
-    img_warped = utils.warp_img(img, points, width, height)
-    img_warped_masked = utils.warp_img(img_thres, points, width, height)
-    img_warped_points = utils.draw_points(img_copy, points, color=(0,0,255), size=15)
+    points = read_trackbars("Warp bars", width=width, height=height)  # utils
+    img_warped = warp_img(img, points, width, height)  # utils
+    img_warped_masked = warp_img(img_thres, points, width, height)  # utils 
+    img_warped_points = draw_points(img_copy, points, color=(0,0,255), size=15)  # utils
     
     # Get raw data about the curve direction
-    mid_point, img_hist = utils.get_histogram(img_warped_masked, display=True, threshold_percentage=0.3, region=4)  # Finds midpoint of line near to the car
-    dir_point, img_hist = utils.get_histogram(img_warped_masked, display=True, threshold_percentage=0.7, region=1)  # Finds dir based on the whole image
+    mid_point, img_hist = get_histogram(img_warped_masked, display=True, threshold_percentage=0.3, region=4)  # Finds midpoint of line near to the car  # Utils 
+    dir_point, img_hist = get_histogram(img_warped_masked, display=True, threshold_percentage=0.7, region=1)  # Finds dir based on the whole image  # Utils 
     curve_raw = dir_point - mid_point
     
     # Average curve to get more stabile results
@@ -45,7 +46,7 @@ def getLaneCurve(img, avg_len=10, display=2):
     
     # Display results.
     if display != 0:
-        img_inv_warp = utils.warp_img(img_warped_masked, points, width, height, inverse=True)
+        img_inv_warp = warp_img(img_warped_masked, points, width, height, inverse=True)  # Utils
         img_inv_warp_masked = img_inv_warp.copy()
         img_inv_warp_masked = cv.cvtColor(img_inv_warp, cv.COLOR_GRAY2BGR)
         img_inv_warp_masked[0:height // 3, 0:width] = 0, 0, 0
@@ -69,7 +70,7 @@ def getLaneCurve(img, avg_len=10, display=2):
                      (w * x + int(curve // 50), midY + 10), (0, 0, 255), 2)
         
     if display == 2:
-        imgStacked = utils.stackImages(0.7, ([img_warped_points, img_warped, img_inv_warp_masked],
+        imgStacked = stackImages(0.7, ([img_warped_points, img_warped, img_inv_warp_masked],  # Utils 
                                              [img_hist, img_lane_color, img_result]))
         cv.imshow('ImageStack', imgStacked)
     elif display == 1:
@@ -90,7 +91,7 @@ if __name__ == "__main__":
         cap = cv.VideoCapture(0)
         
         initial_trackbar_vals = [150, 255, 100, 480]   # For warping of image
-        utils.initialize_trackbars("Warp bars", initial_trackbar_vals, width=640, height=480)
+        initialize_trackbars("Warp bars", initial_trackbar_vals, width=640, height=480)  # Utils
         
         while True:
             ret, img = cap.read(0)

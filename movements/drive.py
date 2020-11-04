@@ -166,7 +166,7 @@ class DriveControl:
 
     def motor_test(self):
         self.left_motor.turn_forward(50)
-        sleep(3)
+        sleep(100)
         self.left_motor.stop()
 
     def encoder_distance_test(self, speed, distance):

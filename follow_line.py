@@ -1,6 +1,7 @@
 import sys
 import time
 import cv2 as cv
+import RPi.GPIO as GPIO
 from gpiozero import DistanceSensor
 from camera.Lane_detection import getLaneCurve
 from movements.drive import DriveControl
@@ -19,8 +20,7 @@ def follow_line_until_wall(cap, drive_control):
         ret, img = cap.read(0)
         if not ret:
             print("Error reading camera!")
-        curve_val = getLaneCurve(img, avg_len=10, display=1)
-        print(curve_val)
+        curve_val = getLaneCurve(img, avg_len=10, display=0)
         if cv.waitKey(1) & 0xFF == ord('q'):
             break
         drive_control.drive_following_lane_curve(curve_val)
@@ -38,7 +38,7 @@ if __name__ == "__main__":
         initial_trackbar_vals = [150, 255, 100, 480]   # For warping of image
         initialize_trackbars("Warp bars", initial_trackbar_vals, width=640, height=480)
         
-        follow_line_until_wall(cap)
+        follow_line_until_wall(cap, drive_control)
         
         drive_control.stop()
         cv.destroyAllWindows()

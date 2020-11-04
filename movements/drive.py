@@ -100,22 +100,28 @@ class DriveControl:
         return 0
 
     #Must be used in a WHILE-LOOP
-    def drive_following_lane_curve(self, camera_value, main_speed = 50):
+    def drive_following_lane_curve(self, camera_value, main_speed = 50, scale_speed=0.5): 
         #Negative values imply turn left and positive imply turn right in this case
-        if abs(camera_value) > abs(self.last_camera_value) + abs(self.lane_curve_sensitivity): 
-            if (camera_value < 0 - self.lane_curve_margin):
-                self.left_motor.turn_forward(main_speed*(1-camera_value))
-                self.right_motor.turn_forward(main_speed*camera_value)
-            elif (camera_value > 0 + self.lane_curve_margin):
-                self.right_motor.turn_forward(main_speed*(1-camera_value))
-                self.left_motor.turn_forward(main_speed*camera_value)
-            else:
-                self.right_motor.turn_forward(main_speed)
-                self.left_motor.turn_forward(main_speed)
+        # if abs(camera_value) > (abs(self.last_camera_value) + abs(self.lane_curve_sensitivity)): 
+        sleep(0.2)
+        if (camera_value < 0 - self.lane_curve_margin):
+            # self.left_motor.turn_forward(scale_speed*(main_speed*(1-camera_value)))
+            self.left_motor.turn_forward(0)
+            self.right_motor.turn_forward(scale_speed*(main_speed*(1+camera_value)))
+            print('Left:', camera_value)
+        elif (camera_value > 0 + self.lane_curve_margin):
+            # self.right_motor.turn_forward(scale_speed*(main_speed*(1-camera_value)))
+            self.right_motor.turn_forward(0)
+            self.left_motor.turn_forward(scale_speed*(main_speed*(1+camera_value)))
+            print('Right:', camera_value)
         else:
-            if self.right_motor.speed == 0 and self.left_motor.speed == 0:
-                self.right_motor.turn_forward(main_speed)
-                self.left_motor.turn_forward(main_speed)
+            self.right_motor.turn_forward(scale_speed*main_speed)
+            self.left_motor.turn_forward(scale_speed*main_speed)
+            print('Straight:', camera_value)
+        # else:
+        #     if self.right_motor.speed == 0 and self.left_motor.speed == 0:
+        #         self.right_motor.turn_forward(main_speed)
+        #         self.left_motor.turn_forward(main_speed)
 
         self.last_camera_value = camera_value
         return 0

@@ -12,12 +12,12 @@ from time import sleep
 #Dette navnet kan jobbes med
 class DriveControl:
 
-    def __init__(self, left_motor_pin, right_motor_pin, 
-        left_forward_pin, left_backward_pin,
-        right_forward_pin, right_backward_pin,
-        left_encoder_pin, right_encoder_pin, 
-        wheel_diameter, 
-        wheel_space_between):
+    def __init__(self, left_motor_pin=12, right_motor_pin=13, 
+        left_forward_pin=22, left_backward_pin=5,
+        right_forward_pin=4, right_backward_pin=17,
+        left_encoder_pin=23, right_encoder_pin=24, 
+        wheel_diameter=6.6, 
+        wheel_space_between=21):
 
         self.left_motor = DCMotor(left_motor_pin, left_forward_pin, left_backward_pin, "Left")
         self.right_motor = DCMotor(right_motor_pin, right_forward_pin, right_backward_pin, "Right")

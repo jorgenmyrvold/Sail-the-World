@@ -192,3 +192,16 @@ class DriveControl:
         self.right_motor.stop()
         sleep(1)
         self.right_encoder.print_encoder_values()
+
+    def test_forward(self, speed, distance):
+        self.resetEncoderDistance()
+        self.left_motor.turn_forward(speed)
+        self.right_motor.turn_forward(speed)
+
+        while(self.left_encoder.distance < distance and self.right_encoder.distance < distance):
+            #Correct errors
+            self.left_encoder.print_encoder_values()
+            self.right_encoder.print_encoder_values()
+        self.stop()
+        
+        return self.left_encoder.distance, self.right_encoder.distance   

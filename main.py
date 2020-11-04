@@ -4,12 +4,12 @@ import signal
 import cv2 as cv
 import numpy as np
 import RPi.GPIO as GPIO
-from startcord.startcord import startcord
 from camera.camera import *
 from camera.aruco_tags import *
 from tasks.raise_flag import raise_flag
 from tasks.lighthouse import lighthouse_task
 from tasks.wind_sausage import wind_sausage
+from tasks.startcord import startcord
 
 # PIN ASSIGNMENTS
 

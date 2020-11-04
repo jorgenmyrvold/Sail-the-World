@@ -31,8 +31,7 @@ class Encoder:
     def __init__(self, pin_in, orientation):
         self.pin_in = pin_in
         GPIO.setup(pin_in, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        
-        (pin_in, GPIO.RISING, 
+        GPIO.add_event_detect(pin_in, GPIO.BOTH, 
             callback=self.encoder_callback, bouncetime=20)
 
         if(orientation == "Left"):

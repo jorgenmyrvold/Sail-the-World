@@ -12,5 +12,5 @@ def startcord():
 	print('cord pulled')
 	return True
 
-if __name__ == "main":
+if __name__ == "__main__":
 	startcord()

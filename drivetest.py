@@ -18,7 +18,7 @@ def main():
     right_encoder = 24
 
     #Wheel parameters
-    wheel_diameter = 6.4
+    wheel_diameter = 6.6
     wheel_space_between = 21 #cm
 
     #Setup the controller
@@ -39,6 +39,18 @@ def main():
     print("Bye")
 
 def test_drive_forward(drive_control):
+
+    drive_control.left_motor.turn_forward(70)
+    sleep(3)
+    drive_control.left_motor.turn_forward(30)
+    sleep(3)
+    drive_control.left_motor.stop()
+
+    drive_control.right_motor.turn_forward(70)
+    sleep(3)
+    drive_control.right_motor.turn_forward(30)
+    sleep(3)
+    drive_control.right_motor.stop()
 
     test_distance = 100
     test_speed = 50

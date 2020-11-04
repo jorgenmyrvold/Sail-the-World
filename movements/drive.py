@@ -124,8 +124,7 @@ class DriveControl:
 
         distance = ((self.wheel_space_between * math.pi)/360) * degrees
     
-        self.left_encoder.resetEncoder()
-        self.right_encoder.resetEncoder()
+        self.resetEncoderDistance()
         self.left_encoder.print_encoder_values()
         self.right_encoder.print_encoder_values()
         
@@ -152,6 +151,8 @@ class DriveControl:
                     self.right_motor.stop()
             self.left_motor.stop()
             self.right_motor.stop()
+
+        self.resetEncoderDistance()
         
     #Reset the distance travelled variable of the encoders
     def resetEncoderDistance(self):
@@ -159,7 +160,7 @@ class DriveControl:
         self.right_encoder.resetEncoder()
 
 
-###########################TESTFUNCTIONS########################################
+#################################TESTFUNCTIONS########################################
 
     def motor_test(self, speed):
         self.right_motor.turn_backward(50)

@@ -18,16 +18,16 @@ class RGB:
             print("INTERRUPT")
 
         #Set up Interrupt-pin
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(7, GPIO.IN)
-        GPIO.add_event_detect(7, GPIO.FALLING, callback = intH)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(4, GPIO.IN)
+        GPIO.add_event_detect(4, GPIO.FALLING, callback = intH)
         self.apds.enableLightSensor()
         self.oval = -1
 
         #Set up LED-light
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(15, GPIO.OUT)
-        GPIO.output(15, GPIO.HIGH)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(10, GPIO.OUT)
+        GPIO.output(10, GPIO.HIGH)
 
         #Member variables
         self.red = self.apds.readRedLight()

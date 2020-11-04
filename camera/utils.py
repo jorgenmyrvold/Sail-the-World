@@ -12,13 +12,13 @@ def thresholding(img, colorspace):
     '''
     if colorspace == 'HLS':
         imgHLS = cv.cvtColor(img, cv.COLOR_BGR2HLS)
-        lowerWhite = np.array([0, 0, 175])
-        upperWhite = np.array([25, 255, 255])
+        lowerWhite = np.array([0, 20, 167])
+        upperWhite = np.array([27, 74, 182])
         maskWhite = cv.inRange(imgHLS, lowerWhite, upperWhite)
     else:  # Default uses HSV colorspace if nothing else is specified
         imgHSV = cv.cvtColor(img, cv.COLOR_BGR2HSV)
-        lowerWhite = np.array([0, 47, 185])
-        upperWhite = np.array([179, 81, 255])
+        lowerWhite = np.array([0, 0, 0])
+        upperWhite = np.array([179, 225, 101])
         maskWhite = cv.inRange(imgHSV, lowerWhite, upperWhite)
     
     return maskWhite
@@ -44,18 +44,18 @@ def nothing(a):
     '''
     pass
 
-def initialize_trackbars(win_name, initial_trackbar_vals, width=480, height=240):
+def initialize_trackbars(win_name, initial_trackbar_vals, width=640, height=480):
     '''
     Creates a window for trackbars with parameters for warping the image.
     '''
     cv.namedWindow(win_name)
-    cv.resizeWindow(win_name, 360, 240)
+    cv.resizeWindow(win_name, 640, 240)
     cv.createTrackbar("Width top", win_name, initial_trackbar_vals[0], width//2, nothing)
     cv.createTrackbar("Height top", win_name, initial_trackbar_vals[1], height, nothing)
     cv.createTrackbar("Width bottom", win_name, initial_trackbar_vals[2], width//2, nothing)
     cv.createTrackbar("Height bottom", win_name, initial_trackbar_vals[3], height, nothing)    
 
-def read_trackbars(win_name, width=480, height=240):
+def read_trackbars(win_name, width=640, height=480):
     '''
     Read trackbar values for the warping. Returns an np.array with 4 points to use
     for warping later.

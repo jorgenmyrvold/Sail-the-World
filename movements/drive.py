@@ -165,18 +165,6 @@ class DriveControl:
 #################################TESTFUNCTIONS########################################
 
     def motor_test(self):
-        self.right_motor.turn_forward(50)
-        sleep(3)
-        self.right_motor.stop()
-        sleep(1)
-        self.right_motor.turn_forward(50)
-        sleep(3)
-        self.right_motor.stop()
-        sleep(1)
-        self.left_motor.turn_forward(50)
-        sleep(3)
-        self.left_motor.stop()
-        sleep(1)
         self.left_motor.turn_forward(50)
         sleep(3)
         self.left_motor.stop()

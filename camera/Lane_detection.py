@@ -106,17 +106,4 @@ if __name__ == "__main__":
         
         
     elif sys.argv[1] == 'img':
-        img = cv.imread('camera/resources/demo_map_img.JPG')
-        img = cv.resize(img, (480, 360))
-        
-        initial_trackbar_vals = [104, 118, 56, 240]   # Right turn: [131, 40, 113, 154]. Straight line: [104, 118, 56, 240]
-        utils.initialize_trackbars("Warp bars", initial_trackbar_vals)
-        
-        while True:
-            curve_val = getLaneCurve(img, avg_len=10, display=2)
-            print(curve_val)
-            
-            if cv.waitKey(1) & 0xFF == ord('q'):
-                break
-        
-        cv.destroyAllWindows()
+        print('Alternative test')

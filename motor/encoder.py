@@ -30,8 +30,9 @@ class Encoder:
 
     def __init__(self, pin_in, orientation):
         self.pin_in = pin_in
-        GPIO.setup(pin_in, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.add_event_detect(pin_in, GPIO.RISING, 
+        GPIO.setup(pin_in, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        
+        (pin_in, GPIO.RISING, 
             callback=self.encoder_callback, bouncetime=20)
 
         if(orientation == "Left"):
@@ -49,7 +50,7 @@ class Encoder:
         
     #interrupt funkjsonen
     def encoder_callback(self, channel):
-        self.current_value = self.current_value + 1
+        self.current_value += 1
         self.distance = float(self.current_value) / float(self.number_of_values_per_round) * self.round_distance
         #print("Encoder:", self.pin_in,"cuurent_value = ",self.current_value,"Distance travelled = ",self.distance,)
 
@@ -60,4 +61,4 @@ class Encoder:
         return True
 
     def print_encoder_values(self):
-        print("Encoder:", self.orientation,"cuurent_value = ",self.current_value,"Distance travelled = ",self.distance)
+        print("Encoder:", self.orientation,"current_value = ",self.current_value,"Distance travelled = ",self.distance)

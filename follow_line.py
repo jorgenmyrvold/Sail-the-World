@@ -28,7 +28,7 @@ def follow_line_until_wall(cap, drive_control):
 
 
 if __name__ == "__main__":
-    
+    GPIO.setmode(GPIO.BCM)
     if len(sys.argv) < 2:
         
         cap = cv.VideoCapture(0)

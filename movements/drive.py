@@ -202,7 +202,7 @@ class DriveControl:
             #Correct errors
             self.left_encoder.print_encoder_values()
             self.right_encoder.print_encoder_values()
-            sleep(0.01)
+            sleep(0.2) 
         self.stop()
         
         return self.left_encoder.distance, self.right_encoder.distance   

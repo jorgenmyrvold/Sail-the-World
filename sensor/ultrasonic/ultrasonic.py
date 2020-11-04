@@ -16,7 +16,7 @@ class Ultrasonic:
 
 if __name__ == "__main__":
     #sensor = DistanceSensor(echo=18, trigger=1)
-    sensor1 = Ultrasonic(36, 28)
+    sensor1 = Ultrasonic(36, 28) #Triggger: GPIO1, Echo: GPIO16
     while True:
         print('Distance: ', sensor1.get_distance)
         sleep(1)

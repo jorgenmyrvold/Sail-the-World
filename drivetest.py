@@ -12,7 +12,7 @@ def main():
     right_motor = 13
     left_forward = 22
     left_backward = 5
-    right_forward = 4
+    right_forward = 27
     right_backward = 17
     left_encoder = 23
     right_encoder = 24
@@ -34,8 +34,8 @@ def main():
     #drive_control.turn_on_the_spot( 180, "CW")
     #test_drive_backward(drive_control)
     #drive_control.encoder_distance_test(30, 100)
-    drive_control.test_forward(30, 100)
-
+    #drive_control.test_forward(30, 100)
+    drive_control.motor_test()
     drive_control.turn_off_motors()
     print("Bye")
 
@@ -43,9 +43,9 @@ def test_drive_forward(drive_control):
 
 
     
-    test_distance = 100
-    test_speed = 70
-    drive_control.drive_forward_distance(test_speed, test_distance)
+    #test_distance = 100
+    #test_speed = 70
+    #drive_control.drive_forward_distance(test_speed, test_distance)
     drive_control.left_encoder.print_encoder_values()
     drive_control.right_encoder.print_encoder_values()
 

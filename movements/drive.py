@@ -14,7 +14,7 @@ class DriveControl:
 
     def __init__(self, left_motor_pin=12, right_motor_pin=13, 
         left_forward_pin=22, left_backward_pin=5,
-        right_forward_pin=4, right_backward_pin=17,
+        right_forward_pin=27, right_backward_pin=17,
         left_encoder_pin=23, right_encoder_pin=24, 
         wheel_diameter=6.6, 
         wheel_space_between=21):
@@ -103,17 +103,15 @@ class DriveControl:
     def drive_following_lane_curve(self, camera_value, main_speed = 30, scale_speed=0.5): 
         #Negative values imply turn left and positive imply turn right in this case
         # if abs(camera_value) > (abs(self.last_camera_value) + abs(self.lane_curve_sensitivity)): 
-        self.right_motor.turn_forward(50)
-        sleep(1)
         sleep(0.2)
         if (camera_value < -0.1):
             # self.left_motor.turn_forward(scale_speed*(main_speed*(1-camera_value)))
-            self.left_motor.turn_forward(0)
+            self.left_motor.stop()
             self.right_motor.turn_forward(main_speed)
             print('Left:', camera_value)
         elif (camera_value > 0.1):
             # self.right_motor.turn_forward(scale_speed*(main_speed*(1-camera_value)))
-            self.right_motor.turn_forward(0)
+            self.right_motor.stop()
             self.left_motor.turn_forward(main_speed)
             print('Right:', camera_value)
         else:

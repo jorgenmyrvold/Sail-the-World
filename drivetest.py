@@ -35,7 +35,7 @@ def main():
     #test_drive_backward(drive_control)
     #drive_control.encoder_distance_test(30, 100)
     #drive_control.test_forward(30, 100)
-    drive_control.test_forward()
+    drive_control.test_forward(50,100)
     drive_control.turn_off_motors()
     print("Bye")
 

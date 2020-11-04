@@ -54,41 +54,46 @@ class RGB:
         return colors
 
 def check_west(rgb_sensor):
-    #Returns true if the robot starts at the west side of the map (Blue flag)
-    blue_value = 100 #The minimum value of the blue light variable
-    if rgb_sensor.color_array[3] >= blue_value:
-        return True
-    return False
+	#Returns true if the robot starts at the west side of the map (Blue flag)
+	blue_value = 1700 #The minimum value of the blue light variable
+	for i in range(500):
+		colors = rgb_sensor.color_array()
+	colors = rgb_sensor.color_array()
+	if(colors[3] >= blue_value):
+		return True
+	return False
 
 def detect_line(rgb_sensor):
-    #Runs while the line is not detected, returns TRUE when the line is detected
-    amb_value = 100 #The maximum value of the ambient light when the sensor is at black color
-    colors = rgb_sensor.color_array()
-    while (colors[0] >= amb_value):
-        colors = rgb_sensor.color_array()
-        print("{}, {}, {}, {}".format(colors[0], colors[1], colors[2], colors[3]))
-    print('Black line detected!')
-    return True
-        
+	#Runs while the line is not detected, returns TRUE when the line is detected
+	amb_value = 4000 #The maximum value of the ambient light when the sensor is at black color
+	for i in range(50):
+		colors = rgb_sensor.color_array()
+	while(colors[0]>=amb_value):
+		colors = rgb_sensor.color_array()
+		print("{}, {}, {}, {}".format(colors[0], colors[1], colors[2], colors[3]))
+		#print(colors[0])
+	print('Black line detected!')
+	return True
+
 if __name__ == "__main__":
 	try:
 		sensor1 = RGB(1)
 		
-        #Function for printing color values from the sensor
-		while True:
-			colors = sensor1.color_array()
-			print("{}, {}, {}, {}".format(colors[0], colors[1], colors[2], colors[3]))
+		#Function for printing color values from the sensor
+		#while True:
+		#	colors = sensor1.color_array()
+		#	print("{}, {}, {}, {}".format(colors[0], colors[1], colors[2], colors[3]))
 
         #Checking east or west start
 
-        #if check_west(sensor1):
-         #   print('You started West (Blue)')
-        #else:
-         #   print('You started East (Yellow)')
+		if(check_west(sensor1)):
+			print('You started west')
+		else:
+			print('Your started east')
 
         
         #Checking detect_line function
-        #detect_line(sensor1)
+		#detect_line(sensor1)
 
 
 	finally:

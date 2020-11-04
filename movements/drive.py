@@ -40,10 +40,12 @@ class DriveControl:
             #Correct errors
             if abs(self.left_encoder.current_value - self.right_encoder.current_value) > 2:
                 if self.left_encoder.current_value > self.right_encoder.current_value:
-                    self.left_motor.turn_forward(self.left_motor.speed-self.left_motor.speed*0.2) #Watch out for the speed reduction value
+                    self.left_motor.turn_forward(self.left_motor.speed - self.left_motor.speed*0.2)  #Watch out for the speed reduction value
+                    self.right_motor.turn_forward(self.right_motor.speed + self.right_motor.speed*0.2) # new addition
                     print("Slowed down left motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
                 else:
                     self.right_motor.turn_forward(self.right_motor.speed-self.right_motor.speed*0.2) #Watch out for the speed reduction value
+                    self.left_motor.turn_forward(self.left_motor.speed + self.left_motor.speed*0.2)    #new addition
                     print("Slowed down right motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
             
             

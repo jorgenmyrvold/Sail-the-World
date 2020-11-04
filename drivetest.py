@@ -40,20 +40,8 @@ def main():
 
 def test_drive_forward(drive_control):
 
-    drive_control.left_motor.turn_forward(70)
-    sleep(3)
-    drive_control.left_motor.turn_forward(30)
-    sleep(3)
-    drive_control.left_motor.stop()
-
-    drive_control.right_motor.turn_forward(70)
-    sleep(3)
-    drive_control.right_motor.turn_forward(30)
-    sleep(3)
-    drive_control.right_motor.stop()
-
     test_distance = 100
-    test_speed = 50
+    test_speed = 70
     drive_control.drive_forward_distance(test_speed, test_distance)
     drive_control.left_encoder.print_encoder_values()
     drive_control.right_encoder.print_encoder_values()

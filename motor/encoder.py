@@ -23,7 +23,7 @@ How to read the distance of the encoder:
 encoder_left.current_value
 
 How to reset the encoder
-encoder_left.resetEncoder()   ???
+encoder_left.resetEncoder()   ???   
 
 '''
 class Encoder:
@@ -31,7 +31,7 @@ class Encoder:
     def __init__(self, pin_in, orientation):
         self.pin_in = pin_in
         GPIO.setup(pin_in, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.add_event_detect(pin_in, GPIO.BOTH, 
+        GPIO.add_event_detect(pin_in, GPIO.RISING, 
             callback=self.encoder_callback, bouncetime=20)
 
         if(orientation == "Left"):
@@ -42,8 +42,8 @@ class Encoder:
             raise Exception("The orientation of the motor must be 'Left' or 'Right'!")
 
         self.current_value = 0
-        self.number_of_values_per_round = 40
-        self.wheel_radius = 3.2
+        self.number_of_values_per_round = 20
+        self.wheel_radius = 3.3
         self.round_distance = self.wheel_radius*2*math.pi
         self.distance = float(0)
         

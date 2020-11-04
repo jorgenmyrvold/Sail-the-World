@@ -4,6 +4,7 @@ import signal
 import cv2 as cv
 import numpy as np
 import RPi.GPIO as GPIO
+from startcord.startcord import startcord
 from camera.camera import *
 from camera.aruco_tags import *
 from tasks.raise_flag import raise_flag
@@ -72,7 +73,8 @@ if __name__ == "__main__":
         main()
         
     elif sys.argv[1] == 'comp':    # Test the complete main
+        startcord()
         signal.signal(signal.SIGALRM, raise_flag_final)
-        signal.alarm(96)   # Terminate main after 96 seconds to raise flag
+        signal.alarm(10)   # Terminate main after 96 seconds to raise flag
         
         foo()

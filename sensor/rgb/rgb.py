@@ -56,7 +56,7 @@ class RGB:
 def check_west(rgb_sensor):
 	#Returns true if the robot starts at the west side of the map (Blue flag)
 	blue_value = 1700 #The minimum value of the blue light variable
-	for i in range(500):
+	for i in range(200):
 		colors = rgb_sensor.color_array()
 	colors = rgb_sensor.color_array()
 	if(colors[3] >= blue_value):
@@ -66,7 +66,7 @@ def check_west(rgb_sensor):
 def detect_line(rgb_sensor):
 	#Runs while the line is not detected, returns TRUE when the line is detected
 	amb_value = 4000 #The maximum value of the ambient light when the sensor is at black color
-	for i in range(50):
+	for i in range(200):
 		colors = rgb_sensor.color_array()
 	while(colors[0]>=amb_value):
 		colors = rgb_sensor.color_array()
@@ -82,9 +82,9 @@ def print_values(rgb_sensor):
 
 def check_west_test(rgb_sensor):
 	if(check_west(sensor1)):
-		print('You started west - Blue flag')
+		print('You started west - Blue sail')
 	else:
-		print('Your started east - Yellow flag')
+		print('Your started east - Yellow sail')
 
 if __name__ == "__main__":
 	try:

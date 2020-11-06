@@ -52,6 +52,9 @@ class RGB:
         b = self.apds.readBlueLight()
         colors = np.array([a, r, g, b])
         return colors
+	
+	def __del__(self):
+		print('Destructed successfully - check the light')
 
 def check_west(rgb_sensor):
 	#Returns true if the robot starts at the west side of the map (Blue flag)

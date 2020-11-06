@@ -10,6 +10,7 @@ from tasks.raise_flag import raise_flag
 from tasks.lighthouse import lighthouse_task
 from tasks.wind_sausage import wind_sausage
 from tasks.startcord import startcord
+from sensor.rgb.rgb import *
 
 # PIN ASSIGNMENTS
 
@@ -25,6 +26,8 @@ GPIO.setmode(GPIO.BCM)
 
 def main():
     cap = cv.VideoCapture(0)   # Create a cameraobject to capture images
+
+    rgb_sensor = RGB(1)
     
     # Determine if we have east or west start
     east_start = starting_east(cap, avg_len=10, display=False)   # TODO: Tune to detect correct colors

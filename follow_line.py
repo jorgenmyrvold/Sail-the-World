@@ -76,13 +76,12 @@ if __name__ == "__main__":
     elif sys.argv[1] == 'test':
         drive_control = DriveControl()
         cap = cv.VideoCapture(0)
-        drive_control = DriveControl()
         # ultrasonic_front = DistanceSensor(echo=12, trigger=7)
         
         initial_trackbar_vals = [150, 255, 100, 480]   # For warping of image
         initialize_trackbars("Warp bars", initial_trackbar_vals, width=640, height=480)
         
-        follow_line_until_wall(cap, drive_control)
+        follow_line_until_wall_test(cap, drive_control)
         
         drive_control.stop()
         cv.destroyAllWindows()

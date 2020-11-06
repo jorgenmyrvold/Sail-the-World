@@ -66,9 +66,10 @@ def check_west(rgb_sensor):
 def detect_line(rgb_sensor):
 	#Runs while the line is not detected, returns TRUE when the line is detected
 	amb_value = 4000 #The maximum value of the ambient light when the sensor is at black color
+	red_value = 500
 	for i in range(200):
 		colors = rgb_sensor.color_array()
-	while(colors[0]>=amb_value):
+	while(colors[1]>=red_value):
 		colors = rgb_sensor.color_array()
 		print("{}, {}, {}, {}".format(colors[0], colors[1], colors[2], colors[3]))
 		#print(colors[0])
@@ -91,7 +92,7 @@ if __name__ == "__main__":
 		sensor1 = RGB(1)
 		
 		#Function for printing color values from the sensor
-		print_values(sensor1)
+		#print_values(sensor1)
 
         #Checking east or west start
 		#check_west_test(sensor1)

@@ -95,7 +95,7 @@ if __name__ == "__main__":
 		#Function for printing color values from the sensor
 		#print_values(sensor1)
 
-        #Checking east or west start
+		#Checking east or west start
 		check_west_test(sensor1)
 
 		#Checking detect_line function

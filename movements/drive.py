@@ -62,6 +62,10 @@ class DriveControl:
         self.left_motor.turn_backward(speed)
         self.right_motor.turn_backward(speed)
     
+    def drive_forwards(self, speed):
+        self.left_motor.turn_forward(speed)
+        self.right_motor.turn_forward(speed)
+    
     def stop(self):
         self.left_motor.stop()
         self.right_motor.stop()

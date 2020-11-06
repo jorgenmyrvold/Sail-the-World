@@ -96,7 +96,7 @@ if __name__ == "__main__":
         while True:
             ret, img = cap.read(0)
             # img = cv.resize(img, (640, 360))
-            curve_val = getLaneCurve(img, avg_len=10, display=2)
+            curve_val = getLaneCurve(img, avg_len=10, display=1)
             print(curve_val)
             
             if cv.waitKey(1) & 0xFF == ord('q'):

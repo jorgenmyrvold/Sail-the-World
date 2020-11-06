@@ -58,7 +58,7 @@ class DCMotor:
         self.set_direction_backward()
         duty_cycle = self.__speed_to_duty_percentage(speed_percent)
         self.pwm_instance.ChangeDutyCycle(duty_cycle)
-        print(self.orientation + "motor set to backward. Duty cycle: " + str(duty_cycle))
+        # print(self.orientation + "motor set to backward. Duty cycle: " + str(duty_cycle))
         self.speed = speed_percent #Update speed tracker
 
     def set_direction_forward(self):
@@ -80,7 +80,7 @@ class DCMotor:
         self.pwm_instance.ChangeDutyCycle(self.stop_percentage)
         self.set_direction_null()
         self.speed = 0 #Update speed tracker
-        print(self.orientation + "motor stopped.")
+        # print(self.orientation + "motor stopped.")
 
     def getOrientation(self):
         return self.orientation

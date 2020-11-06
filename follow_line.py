@@ -6,6 +6,7 @@ from gpiozero import DistanceSensor
 from camera.Lane_detection import getLaneCurve
 from movements.drive import DriveControl
 from camera.utils import initialize_trackbars
+from time import sleep
 
 
 # def follow_line_until_wall(cap, ultrasonic_front, drive_control, distance_from_wall=5):
@@ -23,7 +24,8 @@ def follow_line_until_wall(cap, drive_control):
         curve_val = getLaneCurve(img, avg_len=10, display=0)
         if cv.waitKey(1) & 0xFF == ord('q'):
             break
-        drive_control.drive_following_lane_curve(curve_val)
+        drive_control.drive_following_lane_curve(curve_val, timeout-time.time())
+        #sleep(0.2)
     
 
 
@@ -45,17 +47,16 @@ if __name__ == "__main__":
         cap.release()
     
     elif sys.argv[1] == 'test':
-        cap = cv.VideoCapture(0)
-        
-        initial_trackbar_vals = [150, 255, 100, 480]   # For warping of image
-        initialize_trackbars("Warp bars", initial_trackbar_vals, width=640, height=480)
-        
-        while True:
-            ret, img = cap.read(0)
-            curve_val = getLaneCurve(img, avg_len=10, display=2)
-            
-            if cv.waitKey(1) & 0xFF == ord('q'):
-                break
-        
-        cv.destroyAllWindows()
-        cap.release()
+        drive_control = DriveControl()
+        drive_control.left_motor.turn_forward(30)
+        sleep(2)
+        drive_control.left_motor.turn_backward(30)
+        sleep(2)
+        drive_control.left_motor.stop()
+        sleep(2)
+        drive_control.right_motor.turn_forward(30)
+        sleep(2)
+        drive_control.right_motor.turn_backward(30)
+        sleep(2)
+        drive_control.right_motor.stop()
+        sleep(2)

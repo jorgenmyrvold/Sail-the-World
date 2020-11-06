@@ -39,6 +39,6 @@ if __name__ == "__main__":
                 left_encoder, right_encoder, 
                 wheel_diameter, wheel_space_between)
     rgb_sensor = RGB(1)
-    speed = 30
+    speed = 15
 
     drive_to_black_line_detected(rgb_sensor, drive_control, speed)

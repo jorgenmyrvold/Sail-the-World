@@ -1,18 +1,28 @@
+import sys
+import time
+import signal
 import cv2 as cv
 import numpy as np
+import RPi.GPIO as GPIO
 from camera.camera import *
 from camera.aruco_tags import *
+from tasks.raise_flag import raise_flag
+from tasks.lighthouse import lighthouse_task
+from tasks.wind_sausage import wind_sausage
+from tasks.startcord import startcord
 from sensor.rgb.rgb import *
 
 # PIN ASSIGNMENTS
 
-# LEFT_WHEEL_PIN = 
-# RIGHT_WHEEL_PIN = 
+# LEFT_WHEEL_PIN = 12
+# RIGHT_WHEEL_PIN = 13
+
 # ULTRASONIC_RIGHT_AHEAD = Pin x
 # ULTRASONIC_LEFT_AHEAD = Pin y
 # ULTRASONIC_RIGHT_AFT = Pin z
 # ULTRASONIC_LEFT_AFT = Pin w
 
+GPIO.setmode(GPIO.BCM)
 
 def main():
     cap = cv.VideoCapture(0)   # Create a cameraobject to capture images
@@ -20,43 +30,54 @@ def main():
     rgb_sensor = RGB(1)
     
     # Determine if we have east or west start
-    east_start = starting_east(cap, avg_len=10, display=False)
-
-    is_west = check_west(rgb_sensor)
-
-    #Drive until first line is discovered
-    
-    ''''
-    Start driving function
-    ''''
-
-    detect_line(rgb_sensor)
-
-    ''''
-    Stop driving function and turn 90 degrees depending on east/west start
-    ''''
+    east_start = starting_east(cap, avg_len=10, display=False)   # TODO: Tune to detect correct colors
     
     # Follow inner line to south wall and Vindpølse
+    drive_until_line()
+    turn(90, east_start)  # Turn 90 deg to right or left depending on where we start
+    follow_line_until_wall()
     
     # Vindpølse-taks
-    
-    # Follow south wall to outer line
+    wind_sausage(east_start)   # Do first task, follow wall to next, do second task
     
     # Follow outer line to north wall
+    follow_wall_until_line()
     
-    # Follow north wall to Værhane    
+    # Follow north wall to Værhane
+    follow_wall_until_line(east_start, 0)   #follow_wall_until_line(start_pos, num_lines_to_cross)
     
     # Værhane-task: determine where to park
     park_north = park_north(cap, avg_len=5, max_atempts=100, display=False)  # Returns true or false
     
     # Follow norht wall to lighthouse
+    turn(180, east_start)
+    follow_wall_until_line(east_start, 1)  # Cross 1 line before stopping at the next
     
     # Lighthouse-task
+    lighthouse_task(east_start)
     
     # Follow inner line to correct parking
     
+    
     return 0
 
+        
+def raise_flag_final(e, msg):
+    raise_flag()
+    exit()
+
+def foo():
+    for i in range(99999):
+        print('foo')
+        time.sleep(1)
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) < 2:   # Main competition program
+        main()
+        
+    elif sys.argv[1] == 'comp':    # Test the complete main
+        startcord()
+        signal.signal(signal.SIGALRM, raise_flag_final)
+        signal.alarm(10)   # Terminate main after 96 seconds to raise flag
+        
+        foo()

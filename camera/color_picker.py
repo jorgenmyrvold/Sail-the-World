@@ -89,7 +89,6 @@ if __name__ == "__main__":
         
         while True:
             _, img = cap.read()
-            img = cv.resize(img, (480, 240))
             img_hls = cv.cvtColor(img, cv.COLOR_BGR2HLS)
             img_hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
             
@@ -102,8 +101,8 @@ if __name__ == "__main__":
             
             mask_hsv = cv.cvtColor(mask_hsv, cv.COLOR_GRAY2BGR)   # Converts img to right dimentions to show in stack
             mask_hls = cv.cvtColor(mask_hls, cv.COLOR_GRAY2BGR)   # Converts img to right dimentions to show in stack
-            h_stack_hsv = np.hstack([img_hls, mask_hsv, res_hsv])     # Stacks the array in a single window
-            h_stack_hls = np.hstack([img_hsv, mask_hls, res_hls])     # Stacks the array in a single window
+            h_stack_hsv = np.hstack([img, img_hls, mask_hsv])     # Stacks the array in a single window
+            h_stack_hls = np.hstack([img, img_hsv, mask_hls])     # Stacks the array in a single window
             
             cv.imshow("HSV", h_stack_hsv)
             cv.imshow("HLS", h_stack_hls) 

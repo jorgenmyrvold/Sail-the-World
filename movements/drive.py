@@ -100,19 +100,30 @@ class DriveControl:
         return 0
 
     #Must be used in a WHILE-LOOP
-    def drive_following_lane_curve(self, camera_value, time, main_speed = 40): 
+    def drive_following_lane_curve(self, camera_value, time, main_speed = 30): 
         #Negative values imply turn left and positive imply turn right in this case
         # if abs(camera_value) > (abs(self.last_camera_value) + abs(self.lane_curve_sensitivity)): 
-        if (camera_value < -0.1):
+        if (camera_value < -0.3):
             # self.left_motor.turn_forward(scale_speed*(main_speed*(1-camera_value)))
             self.left_motor.turn_backward(5)
             self.right_motor.turn_forward(main_speed)
-            print(time, 'Left:', camera_value)
-        elif (camera_value > 0.1):
+            print(time, 'LEFT:', camera_value)
+        elif (camera_value < -0.1):
+            # self.left_motor.turn_forward(scale_speed*(main_speed*(1-camera_value)))
+            self.left_motor.turn_forward(0)
+            self.right_motor.turn_forward(main_speed)
+            print(time, 'left:', camera_value)
+        elif (camera_value > 0.3):
             # self.right_motor.turn_forward(scale_speed*(main_speed*(1-camera_value)))
             self.right_motor.turn_backward(5)
             self.left_motor.turn_forward(main_speed)
-            print(time, 'Right:', camera_value)
+            print(time, 'RIGHT:', camera_value)
+        elif (camera_value > 0.1):
+            # self.right_motor.turn_forward(scale_speed*(main_speed*(1-camera_value)))
+            self.right_motor.turn_forward(0)
+            self.left_motor.turn_forward(main_speed)
+            print(time, 'right:', camera_value)
+        
         else:
             self.right_motor.turn_forward(main_speed)
             self.left_motor.turn_forward(main_speed)

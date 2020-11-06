@@ -92,10 +92,10 @@ if __name__ == "__main__":
 		sensor1 = RGB(1)
 		
 		#Function for printing color values from the sensor
-		print_values(sensor1)
+		#print_values(sensor1)
 
         #Checking east or west start
-		#check_west_test(sensor1)
+		check_west_test(sensor1)
 
 		#Checking detect_line function
 		#detect_line(sensor1)

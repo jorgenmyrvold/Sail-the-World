@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
 
-def drive_to_black_line_detected(rgb_sensor, motors, speed):
+def drive_to_black_line_detected(rgb_sensor, motors, speed=15):
     motors.drive_forwards(speed)
     while(detect_line(rgb_sensor) != True):
         print('Line not detected')

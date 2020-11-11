@@ -11,6 +11,9 @@ from tasks.lighthouse import lighthouse_task
 from tasks.wind_sausage import wind_sausage
 from tasks.startcord import startcord
 from sensor.rgb.rgb import *
+from movements.drive import DriveControl
+from follow_line import *
+from drive_to_line import *
 
 # PIN ASSIGNMENTS
 
@@ -26,35 +29,37 @@ GPIO.setmode(GPIO.BCM)
 
 def main():
     cap = cv.VideoCapture(0)   # Create a cameraobject to capture images
-
     rgb_sensor = RGB(1)
+    drive_controll = DriveControl()
     
     # Determine if we have east or west start
-    east_start = starting_east(cap, avg_len=10, display=False)   # TODO: Tune to detect correct colors
+    start_west = check_west(rgb_sensor)
+    print("Starting west: ", start_west)
     
     # Follow inner line to south wall and Vindpølse
-    drive_until_line()
-    turn(90, east_start)  # Turn 90 deg to right or left depending on where we start
-    follow_line_until_wall()
+    drive_to_black_line_detected(rgb_sensor, drive_controll)
+    
+    if start_west: drive_controll.turn_on_the_spot(140, 'CW')
+    else: drive_controll.turn_on_the_spot(140, 'CC')
+    
+    follow_line_until_wall(cap, drive_controll)
     
     # Vindpølse-taks
-    wind_sausage(east_start)   # Do first task, follow wall to next, do second task
+    # wind_sausage(east_start)   # Do first task, follow wall to next, do second task
     
     # Follow outer line to north wall
-    follow_wall_until_line()
-    
+    # follow_wall_until_line()
+    # follow_line_until_wall(cap, drive_controll)   #follow_wall_until_line(start_pos, num_lines_to_cross)
+        
     # Follow north wall to Værhane
-    follow_wall_until_line(east_start, 0)   #follow_wall_until_line(start_pos, num_lines_to_cross)
-    
     # Værhane-task: determine where to park
-    park_north = park_north(cap, avg_len=5, max_atempts=100, display=False)  # Returns true or false
+    # park_north = park_north(cap, avg_len=5, max_atempts=100, display=False)  # Returns true or false
     
-    # Follow norht wall to lighthouse
-    turn(180, east_start)
-    follow_wall_until_line(east_start, 1)  # Cross 1 line before stopping at the next
+    # drive_controll.turn_on_the_spot(140, )
+    # follow_wall_until_line(east_start, 1)  # Cross 1 line before stopping at the next
     
     # Lighthouse-task
-    lighthouse_task(east_start)
+    # lighthouse_task(east_start)
     
     # Follow inner line to correct parking
     
@@ -78,6 +83,6 @@ if __name__ == "__main__":
     elif sys.argv[1] == 'comp':    # Test the complete main
         startcord()
         signal.signal(signal.SIGALRM, raise_flag_final)
-        signal.alarm(10)   # Terminate main after 96 seconds to raise flag
+        signal.alarm(96)   # Terminate main after 96 seconds to raise flag
         
-        foo()
+        main()

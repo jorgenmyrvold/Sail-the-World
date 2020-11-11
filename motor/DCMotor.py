@@ -21,8 +21,8 @@ class DCMotor:
     def __init__(self, pwm_pin, pin_out_1, pin_out_2, orientation_of_motor, stop_percentage = 0):
         
         self.pwm_pin = pwm_pin
-        self.pin1 = pin_out_1
-        self.pin2 = pin_out_2
+        self.pin1 = pin_out_1 #forward
+        self.pin2 = pin_out_2 #backward
 
         self.full_forward = 85 #THIS SETS THE MAXIMUM PWM LIMIT. For the 6V motor, 85 should be fine. 
         self.stop_percentage = stop_percentage

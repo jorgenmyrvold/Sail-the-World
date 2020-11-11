@@ -40,10 +40,12 @@ class DriveControl:
             #Correct errors
             if abs(self.left_encoder.current_value - self.right_encoder.current_value) > 2:
                 if self.left_encoder.current_value > self.right_encoder.current_value:
-                    self.left_motor.turn_forward(self.left_motor.speed-self.left_motor.speed*0.2) #Watch out for the speed reduction value
+                    self.left_motor.turn_forward(self.left_motor.speed - self.left_motor.speed*0.2)  #Watch out for the speed reduction value
+                    self.right_motor.turn_forward(self.right_motor.speed + self.right_motor.speed*0.2) # new addition
                     print("Slowed down left motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
                 else:
                     self.right_motor.turn_forward(self.right_motor.speed-self.right_motor.speed*0.2) #Watch out for the speed reduction value
+                    self.left_motor.turn_forward(self.left_motor.speed + self.left_motor.speed*0.2)    #new addition
                     print("Slowed down right motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
             
             
@@ -167,21 +169,9 @@ class DriveControl:
 
 #################################TESTFUNCTIONS########################################
 
-    def motor_test(self, speed):
-        self.right_motor.turn_backward(50)
-        sleep(3)
-        self.right_motor.stop()
-        sleep(1)
-        self.right_motor.turn_forward(50)
-        sleep(3)
-        self.right_motor.stop()
-        sleep(1)
-        self.left_motor.turn_backward(50)
-        sleep(3)
-        self.left_motor.stop()
-        sleep(1)
+    def motor_test(self):
         self.left_motor.turn_forward(50)
-        sleep(3)
+        sleep(100)
         self.left_motor.stop()
 
     def encoder_distance_test(self, speed, distance):
@@ -195,3 +185,17 @@ class DriveControl:
         self.right_motor.stop()
         sleep(1)
         self.right_encoder.print_encoder_values()
+
+    def test_forward(self, speed, distance):
+        self.resetEncoderDistance()
+        self.left_motor.turn_forward(speed)
+        self.right_motor.turn_forward(speed)
+
+        while(self.left_encoder.distance < distance and self.right_encoder.distance < distance):
+            #Correct errors
+            self.left_encoder.print_encoder_values()
+            self.right_encoder.print_encoder_values()
+            sleep(0.2) 
+        self.stop()
+        
+        return self.left_encoder.distance, self.right_encoder.distance   

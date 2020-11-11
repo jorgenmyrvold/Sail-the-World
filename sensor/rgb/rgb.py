@@ -15,7 +15,8 @@ class RGB:
         self.apds = APDS9960(bus)
 
         def intH(channel):
-            print("INTERRUPT")
+            # print("INTERRUPT")
+            return None
 
         #Set up Interrupt-pin
         GPIO.setmode(GPIO.BCM)
@@ -69,21 +70,32 @@ def check_west(rgb_sensor):
 
 def detect_line(rgb_sensor):
 	#Runs while the line is not detected, returns TRUE when the line is detected
-	#amb_value = 4000 #The maximum value of the ambient light when the sensor is at black color
-	red_value = 500 #The maximum value of the red light when the sensor is at black color
+	amb_value = 5000 #The maximum value of the ambient light when the sensor is at black color
+	red_value = 600 #The maximum value of the red light when the sensor is at black color
+	counter = 0
 	for i in range(200):
 		colors = rgb_sensor.color_array()
-	while(colors[1]>=red_value):
+
+	while True:
 		colors = rgb_sensor.color_array()
 		print("{}, {}, {}, {}".format(colors[0], colors[1], colors[2], colors[3]))
-		#print(colors[0])
-	print('Black line detected!')
-	return True
+		if (colors[0] < amb_value and colors[1] > red_value):
+			counter += 1
+			print('counter:', counter)
+			if counter > 1:
+				print('Black line detected!')
+				return True
+		
+		else: 
+			counter = 0
+		sleep(0.05)
+
 
 def print_values(rgb_sensor):
 	while True:
 		colors = sensor1.color_array()
 		print("{}, {}, {}, {}".format(colors[0], colors[1], colors[2], colors[3]))
+		sleep(0.5)
 
 def check_west_test(rgb_sensor):
 	if(check_west(sensor1)):
@@ -96,15 +108,14 @@ if __name__ == "__main__":
 		sensor1 = RGB(1)
 		
 		#Function for printing color values from the sensor
-		#print_values(sensor1)
+		# print_values(sensor1)
 
 		#Checking east or west start
-		check_west_test(sensor1)
+		# check_west_test(sensor1)
 
 		#Checking detect_line function
-		#detect_line(sensor1)
-
-
+		detect_line(sensor1)
+	
 	finally:
 		GPIO.cleanup()
 

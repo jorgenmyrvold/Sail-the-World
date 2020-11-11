@@ -106,28 +106,28 @@ class DriveControl:
         return 0
 
     #Must be used in a WHILE-LOOP
-    def drive_following_lane_curve(self, camera_value, time, main_speed = 30): 
+    def drive_following_lane_curve(self, camera_value, main_speed = 20): 
         if (camera_value < -0.3):
             self.left_motor.turn_backward(5)
             self.right_motor.turn_forward(main_speed)
-            print(time, 'LEFT:', camera_value)
+            print('LEFT:', camera_value)
         elif (camera_value < -0.1):
             self.left_motor.turn_forward(0)
             self.right_motor.turn_forward(main_speed)
-            print(time, 'left:', camera_value)
+            print('left:', camera_value)
         elif (camera_value > 0.3):
             self.right_motor.turn_backward(5)
             self.left_motor.turn_forward(main_speed)
-            print(time, 'RIGHT:', camera_value)
+            print('RIGHT:', camera_value)
         elif (camera_value > 0.1):
             self.right_motor.turn_forward(0)
             self.left_motor.turn_forward(main_speed)
-            print(time, 'right:', camera_value)
+            print('right:', camera_value)
         
         else:
             self.right_motor.turn_forward(main_speed)
             self.left_motor.turn_forward(main_speed)
-            print(time, 'Straight:', camera_value)
+            print('Straight:', camera_value)
 
         return 0
 

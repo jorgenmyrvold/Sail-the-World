@@ -39,8 +39,8 @@ def main():
     # Follow inner line to south wall and Vindpølse
     drive_to_black_line_detected(rgb_sensor, drive_controll)
     
-    if start_west: drive_controll.turn_on_the_spot(140, 'CW')
-    else: drive_controll.turn_on_the_spot(140, 'CC')
+    if start_west: drive_controll.turn_on_the_spot(180, 'CW')
+    else: drive_controll.turn_on_the_spot(180, 'CC')
     
     follow_line_until_wall(cap, drive_controll)
     

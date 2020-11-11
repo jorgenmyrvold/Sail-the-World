@@ -15,6 +15,8 @@ def follow_line_until_wall(cap, drive_control):
     # while close_to_wall_count < 3:
     #     if ultrasonic_front < distance_from_wall: close_to_wall_count += 1
     #     if ultrasonic_front > distance_from_wall: close_to_wall_count = 0
+    initial_trackbar_vals = [150, 255, 100, 480]   # For warping of image
+    initialize_trackbars("Warp bars", initial_trackbar_vals, width=640, height=480)
     
     timeout = time.time() + 20   # timeout after 20 sec
     while time.time() < timeout:

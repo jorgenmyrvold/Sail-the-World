@@ -5,6 +5,7 @@ tasks/__pycache__
 motor/__pycache__
 startcord/__pycache__
 movements/__pycache__
+*.pyc
 
 Sail-the-World-Workspace.code-workspace
 sail the world.code-workspace

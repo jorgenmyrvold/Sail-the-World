@@ -21,8 +21,8 @@ class DCMotor:
     def __init__(self, pwm_pin, pin_out_1, pin_out_2, orientation_of_motor, stop_percentage = 0):
         
         self.pwm_pin = pwm_pin
-        self.pin1 = pin_out_1
-        self.pin2 = pin_out_2
+        self.pin1 = pin_out_1 #forward
+        self.pin2 = pin_out_2 #backward
 
         self.full_forward = 85 #THIS SETS THE MAXIMUM PWM LIMIT. For the 6V motor, 85 should be fine. 
         self.stop_percentage = stop_percentage
@@ -58,7 +58,7 @@ class DCMotor:
         self.set_direction_backward()
         duty_cycle = self.__speed_to_duty_percentage(speed_percent)
         self.pwm_instance.ChangeDutyCycle(duty_cycle)
-        print(self.orientation + "motor set to backward. Duty cycle: " + str(duty_cycle))
+        # print(self.orientation + "motor set to backward. Duty cycle: " + str(duty_cycle))
         self.speed = speed_percent #Update speed tracker
 
     def set_direction_forward(self):
@@ -80,7 +80,7 @@ class DCMotor:
         self.pwm_instance.ChangeDutyCycle(self.stop_percentage)
         self.set_direction_null()
         self.speed = 0 #Update speed tracker
-        print(self.orientation + "motor stopped.")
+        # print(self.orientation + "motor stopped.")
 
     def getOrientation(self):
         return self.orientation
@@ -94,6 +94,9 @@ class DCMotor:
     def __speed_to_duty_percentage(self, percentage):
         #Find the factor you have to multiply a percentage with to map perfectly from 100% to full_forward_percent
         #print(percentage)
+        if (percentage >= 100): percentage = 100
+        if (percentage <= -100): percentage = -100
+        
         factor = float(self.full_forward)/100.0
         duty_percentage = (self.stop_percentage) + factor * percentage
         #print(duty_percentage)

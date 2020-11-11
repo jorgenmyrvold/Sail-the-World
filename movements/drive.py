@@ -12,12 +12,12 @@ from time import sleep
 #Dette navnet kan jobbes med
 class DriveControl:
 
-    def __init__(self, left_motor_pin, right_motor_pin, 
-        left_forward_pin, left_backward_pin,
-        right_forward_pin, right_backward_pin,
-        left_encoder_pin, right_encoder_pin, 
-        wheel_diameter, 
-        wheel_space_between):
+    def __init__(self, left_motor_pin=12, right_motor_pin=13, 
+        left_forward_pin=22, left_backward_pin=5,
+        right_forward_pin=27, right_backward_pin=17,
+        left_encoder_pin=23, right_encoder_pin=24, 
+        wheel_diameter=6.6, 
+        wheel_space_between=21):
 
         self.left_motor = DCMotor(left_motor_pin, left_forward_pin, left_backward_pin, "Left")
         self.right_motor = DCMotor(right_motor_pin, right_forward_pin, right_backward_pin, "Right")
@@ -40,10 +40,12 @@ class DriveControl:
             #Correct errors
             if abs(self.left_encoder.current_value - self.right_encoder.current_value) > 2:
                 if self.left_encoder.current_value > self.right_encoder.current_value:
-                    self.left_motor.turn_forward(self.left_motor.speed-self.left_motor.speed*0.2) #Watch out for the speed reduction value
+                    self.left_motor.turn_forward(self.left_motor.speed - self.left_motor.speed*0.2)  #Watch out for the speed reduction value
+                    self.right_motor.turn_forward(self.right_motor.speed + self.right_motor.speed*0.2) # new addition
                     print("Slowed down left motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
                 else:
                     self.right_motor.turn_forward(self.right_motor.speed-self.right_motor.speed*0.2) #Watch out for the speed reduction value
+                    self.left_motor.turn_forward(self.left_motor.speed + self.left_motor.speed*0.2)    #new addition
                     print("Slowed down right motor ------ left distance: ",self.left_encoder.distance," Right distance: ",self.right_encoder.distance)
             
             
@@ -104,24 +106,29 @@ class DriveControl:
         return 0
 
     #Must be used in a WHILE-LOOP
-    def drive_following_lane_curve(self, camera_value, main_speed = 50):
-        #Negative values imply turn left and positive imply turn right in this case
-        if abs(camera_value) > abs(self.last_camera_value) + abs(self.lane_curve_sensitivity): 
-            if (camera_value < 0 - self.lane_curve_margin):
-                self.left_motor.turn_forward(main_speed*(1-camera_value))
-                self.right_motor.turn_forward(main_speed*camera_value)
-            elif (camera_value > 0 + self.lane_curve_margin):
-                self.right_motor.turn_forward(main_speed*(1-camera_value))
-                self.left_motor.turn_forward(main_speed*camera_value)
-            else:
-                self.right_motor.turn_forward(main_speed)
-                self.left_motor.turn_forward(main_speed)
+    def drive_following_lane_curve(self, camera_value, time, main_speed = 30): 
+        if (camera_value < -0.3):
+            self.left_motor.turn_backward(5)
+            self.right_motor.turn_forward(main_speed)
+            print(time, 'LEFT:', camera_value)
+        elif (camera_value < -0.1):
+            self.left_motor.turn_forward(0)
+            self.right_motor.turn_forward(main_speed)
+            print(time, 'left:', camera_value)
+        elif (camera_value > 0.3):
+            self.right_motor.turn_backward(5)
+            self.left_motor.turn_forward(main_speed)
+            print(time, 'RIGHT:', camera_value)
+        elif (camera_value > 0.1):
+            self.right_motor.turn_forward(0)
+            self.left_motor.turn_forward(main_speed)
+            print(time, 'right:', camera_value)
+        
         else:
-            if self.right_motor.speed == 0 and self.left_motor.speed == 0:
-                self.right_motor.turn_forward(main_speed)
-                self.left_motor.turn_forward(main_speed)
+            self.right_motor.turn_forward(main_speed)
+            self.left_motor.turn_forward(main_speed)
+            print(time, 'Straight:', camera_value)
 
-        self.last_camera_value = camera_value
         return 0
 
     def turn_on_the_spot(self, degrees, direction, speed = 50):
@@ -166,21 +173,9 @@ class DriveControl:
 
 #################################TESTFUNCTIONS########################################
 
-    def motor_test(self, speed):
-        self.right_motor.turn_backward(50)
-        sleep(3)
-        self.right_motor.stop()
-        sleep(1)
-        self.right_motor.turn_forward(50)
-        sleep(3)
-        self.right_motor.stop()
-        sleep(1)
-        self.left_motor.turn_backward(50)
-        sleep(3)
-        self.left_motor.stop()
-        sleep(1)
+    def motor_test(self):
         self.left_motor.turn_forward(50)
-        sleep(3)
+        sleep(100)
         self.left_motor.stop()
 
     def encoder_distance_test(self, speed, distance):
@@ -194,3 +189,17 @@ class DriveControl:
         self.right_motor.stop()
         sleep(1)
         self.right_encoder.print_encoder_values()
+
+    def test_forward(self, speed, distance):
+        self.resetEncoderDistance()
+        self.left_motor.turn_forward(speed)
+        self.right_motor.turn_forward(speed)
+
+        while(self.left_encoder.distance < distance and self.right_encoder.distance < distance):
+            #Correct errors
+            self.left_encoder.print_encoder_values()
+            self.right_encoder.print_encoder_values()
+            sleep(0.2) 
+        self.stop()
+        
+        return self.left_encoder.distance, self.right_encoder.distance   

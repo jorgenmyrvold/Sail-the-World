@@ -59,7 +59,7 @@ class RGB:
 def check_west(rgb_sensor):
 	#Returns true if the robot starts at the west side of the map (Blue flag)
 	#blue_value = 1700 #The minimum value of the blue light variable
-	red_value = 1000 #The maximum value of the red light
+	red_value = 1000 #The maximum value of the red light....
 	for i in range(200):
 		colors = rgb_sensor.color_array()
 	colors = rgb_sensor.color_array()

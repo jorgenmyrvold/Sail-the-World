@@ -1,6 +1,6 @@
 import cv2 as cv
 import numpy as np
-import camera.utils
+# import camera.utils
 from camera.utils import *
 from time import sleep
 import sys
@@ -37,6 +37,7 @@ def getLaneCurve(img, avg_len=10, display=2):
     mid_point, img_hist = get_histogram(img_warped_masked, display=True, threshold_percentage=0.3, region=4)  # Finds midpoint of line near to the car  # Utils 
     dir_point, img_hist = get_histogram(img_warped_masked, display=True, threshold_percentage=0.7, region=1)  # Finds dir based on the whole image  # Utils 
     curve_raw = dir_point - mid_point
+    # curve_raw = dir_point
     
     # Average curve to get more stabile results
     curve_list.append(curve_raw)
@@ -77,8 +78,7 @@ def getLaneCurve(img, avg_len=10, display=2):
         cv.imshow('Resutlt', img_result)
     
     # Normalization
-    # This part has to be tuned to get propper values
-    curve = curve/100
+    curve = curve/80
     if curve < -1: curve = -1
     if curve > 1: curve = 1
     

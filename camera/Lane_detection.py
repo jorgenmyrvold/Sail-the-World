@@ -18,7 +18,7 @@ def getLaneCurve(img, avg_len=10, display=2):
         avg_len: number of the last frames to average to the final output
         display: Choose which images to display. 0: none, 1: result, 2: stack of all images
     return: 
-        curve: float on the interval [-1, 1] describing curve. Negative is left curve, positive is right (I think...)
+        curve: float on the interval [-1, 1] describing curve. Negative is left curve, positive is right
     '''
     #img = cv.resize(img, (640, 480))
     img_copy = img.copy()
@@ -94,7 +94,6 @@ if __name__ == "__main__":
         
         while True:
             ret, img = cap.read(0)
-            # img = cv.resize(img, (640, 360))
             curve_val = getLaneCurve(img, avg_len=10, display=2)
             print(curve_val)
             

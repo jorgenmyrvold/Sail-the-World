@@ -86,25 +86,22 @@ def getLaneCurve(img, avg_len=10, display=2):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print('Live video')
-        cap = cv.VideoCapture(0)
+    print('Live video')
+    cap = cv.VideoCapture(0)
+    
+    initial_trackbar_vals = [150, 255, 100, 480]   # For warping of image
+    initialize_trackbars("Warp bars", initial_trackbar_vals, width=640, height=480)  # Utils
+    
+    while True:
+        ret, img = cap.read(0)
+        # img = cv.resize(img, (640, 360))
+        curve_val = getLaneCurve(img, avg_len=10, display=2)
+        print(curve_val)
         
-        initial_trackbar_vals = [150, 255, 100, 480]   # For warping of image
-        initialize_trackbars("Warp bars", initial_trackbar_vals, width=640, height=480)  # Utils
+        if cv.waitKey(1) & 0xFF == ord('q'):
+            break
+    
+    cv.destroyAllWindows()
+    cap.release()
         
-        while True:
-            ret, img = cap.read(0)
-            # img = cv.resize(img, (640, 360))
-            curve_val = getLaneCurve(img, avg_len=10, display=1)
-            print(curve_val)
-            
-            if cv.waitKey(1) & 0xFF == ord('q'):
-                break
-        
-        cv.destroyAllWindows()
-        cap.release()
-        
-        
-    elif sys.argv[1] == 'img':
-        print('Alternative test')
+

@@ -14,6 +14,7 @@ from sensor.rgb.rgb import *
 from movements.drive import DriveControl
 from follow_line import *
 from drive_to_line import *
+from gpiozero import DistanceSensor
 
 # PIN ASSIGNMENTS
 
@@ -31,6 +32,7 @@ def main():
     cap = cv.VideoCapture(0)   # Create a cameraobject to capture images
     rgb_sensor = RGB(1)
     drive_controll = DriveControl()
+    ultrasonic_front = DistanceSensor(echo=16, trigger=1)
     
     # Determine if we have east or west start
     start_west = check_west(rgb_sensor)
@@ -42,7 +44,7 @@ def main():
     if start_west: drive_controll.turn_on_the_spot(180, 'CW')
     else: drive_controll.turn_on_the_spot(180, 'CC')
     
-    follow_line_until_wall(cap, drive_controll)
+    follow_line_until_wall(cap, drive_controll, ultrasonic_front)
     
     # Vindpølse-taks
     # wind_sausage(east_start)   # Do first task, follow wall to next, do second task
@@ -63,7 +65,7 @@ def main():
     
     # Follow inner line to correct parking
     
-    
+    sleep(100)
     return 0
 
         
